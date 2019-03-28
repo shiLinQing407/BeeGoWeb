@@ -1,7 +1,6 @@
-package user
+package system
 
 import (
-	"BeeGoWeb/models/system"
 	"github.com/astaxie/beego/orm"
 	"BeeGoWeb/models/common"
 )
@@ -28,7 +27,7 @@ type User struct {
 	Email          string         `orm:"size(256)"`
 	Avatar         string         `orm:"size(256)"`
 	RoleIds        []int          `orm:"-" form:"RoleIds"`
-	RoleUserRel    []*system.RoleUserRel `orm:"reverse(many)"` // 设置一对多的反向关系
+	RoleUserRel    []*RoleUserRel `orm:"reverse(many)"` // 设置一对多的反向关系
 	MenuUrlForList []string       `orm:"-"`
 	CreateTime     int64
 	UpdateTime     int64
@@ -83,7 +82,7 @@ func UserGetById(id int) (*User, error) {
 
 func UserGetByName(userName string) (*User, error) {
 	u := new(User)
-	err := orm.NewOrm().QueryTable(tableName).Filter("user_name", userName).One(u)
+	err := orm.NewOrm().QueryTable(userTable).Filter("user_name", userName).One(u)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +92,7 @@ func UserGetByName(userName string) (*User, error) {
 func UserList(page, pageSize int, filters ...interface{}) ([]*User, int64) {
 	offset := (page - 1) * pageSize
 	users := make([]*User, 0)
-	query := orm.NewOrm().QueryTable(tableName)
+	query := orm.NewOrm().QueryTable(userTable)
 	if len(filters) > 0 {
 		l := len(filters)
 		for i := 0; i < l; i += 2 {
@@ -119,7 +118,7 @@ func UserListGrid(page, pageSize int, filters ...interface{}) []User {
 	DataGrid获取User数据
  */
 func UserPageList(params *UserQueryParam) ([]*User, int64) {
-	query := orm.NewOrm().QueryTable(tableName)
+	query := orm.NewOrm().QueryTable(userTable)
 	users := make([]*User, 0)
 	//默认排序
 	sortOrder := "Id"

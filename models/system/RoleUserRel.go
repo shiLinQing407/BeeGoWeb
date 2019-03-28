@@ -3,13 +3,12 @@ package system
 import (
 	"github.com/astaxie/beego/orm"
 	"BeeGoWeb/models/common"
-	"BeeGoWeb/models/user"
 )
 
 type RoleUserRel struct {
 	Id         int `orm: "auto"`
 	Role       *Role `orm:"rel(fk)"`  //外键
-	User       *user.User `orm:"rel(fk)" ` // 外键
+	User       *User `orm:"rel(fk)" ` // 外键
 	CreateTime int64 //创建时间
 }
 

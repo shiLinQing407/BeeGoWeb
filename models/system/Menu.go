@@ -112,7 +112,7 @@ func MenuListGetByUid(uid, maxrtype int) []*Menu {
 	var sql string
 	if user.Id == 0 {
 		//如果是管理员，则查出所有的
-		sql = fmt.Sprintf(`SELECT id,  parent_id, title_cn, title_en, type, icon, sort, url_for FROM %s Where logic_delete = 0 Order By sort asc,Id asc`, TableName("menu"))
+		sql = fmt.Sprintf(`SELECT id,  parent_id, title_cn, title_en, type, icon, sort, url_for FROM %s Where logic_delete = 0 Order By sort asc,Id asc`, menuTable)
 		o.Raw(sql).QueryRows(&list)
 	} else {
 		//联查多张表，找出某用户有权管理的
@@ -120,7 +120,7 @@ func MenuListGetByUid(uid, maxrtype int) []*Menu {
 		FROM %s As T0
 		INNER JOIN %s AS T1 ON T0.role_id = T1.role_id
 		INNER JOIN %s AS T2 ON T1.menu_id = T2.id
-		WHERE T0.user_id = ? and T2.logic_delete = 0  Order By T2.sort asc,T2.id asc`, TableName("role_user_rel"),TableName("role_menu_rel"), TableName("menu"))
+		WHERE T0.user_id = ? and T2.logic_delete = 0  Order By T2.sort asc,T2.id asc`, roleUserRelTable,roleMenuTable, menuTable)
 		o.Raw(sql, user.Id).QueryRows(&list)
 	}
 	//格式化菜单列表

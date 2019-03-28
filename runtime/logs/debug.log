@@ -147,3 +147,4 @@
 2019/03/28 01:31:55.104 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  19.001679ms|   match|[44m GET     [0m /static/plugins/jquery-validation/localization/messages_zh.min.js
 2019/03/28 01:31:55.104 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  19.457593ms|   match|[44m GET     [0m /static/sdtheme/scripts/sdvalidate.js
 2019/03/28 10:59:53.565 [I] [asm_amd64.s:2361]  http server Running on http://127.0.0.1:8080
+2019/03/28 16:21:34.424 [I] [asm_amd64.s:2361]  http server Running on http://127.0.0.1:8080
