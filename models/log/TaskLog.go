@@ -18,7 +18,7 @@ type TaskLog struct {
 var taskLogTable = common.TableName("task_log")
 
 
-func (t *TaskLog) TableName() string {
+func (t *TaskLog) GetTableName() string {
 	return taskLogTable
 }
 

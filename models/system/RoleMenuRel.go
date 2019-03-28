@@ -16,7 +16,7 @@ type RoleMenuRel struct {
 
 var roleMenuTable = common.TableName("role_menu_rel")
 
-func (c *RoleMenuRel) TableName() string {
+func (c *RoleMenuRel) GetTableName() string {
 	return roleMenuTable
 }
 

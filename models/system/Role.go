@@ -25,7 +25,7 @@ type Role struct {
 
 var roleTable = common.TableName("role")
 
-func (c *Role) TableName() string {
+func (c *Role) GetTableName() string {
 	return roleTable
 }
 

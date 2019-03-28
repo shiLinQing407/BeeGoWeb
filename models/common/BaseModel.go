@@ -5,10 +5,7 @@
 */
 package common
 
-import (
-	"fmt"
-)
-
+import "github.com/astaxie/beego"
 
 // JsonResult 用于返回ajax请求的基类
 type JsonResult struct {
@@ -26,7 +23,6 @@ type BaseQueryParam struct {
 }
 
 func TableName(name string) string {
-	table := fmt.Sprintf("%s", name)
-	//fmt.Println(table)
+	table := beego.AppConfig.String("dbprefix") + name
 	return table
 }

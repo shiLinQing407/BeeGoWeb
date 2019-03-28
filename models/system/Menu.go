@@ -28,7 +28,7 @@ type Menu struct {
 }
 var menuTable = common.TableName("menu")
 
-func (c *Menu) TableName() string {
+func (c *Menu) GetTableName() string {
 	return menuTable
 }
 

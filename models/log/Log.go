@@ -22,7 +22,7 @@ type Log struct {
 var logTable = common.TableName("log")
 
 
-func (l *Log) TableName() string {
+func (l *Log) GetTableName() string {
 	return logTable
 }
 

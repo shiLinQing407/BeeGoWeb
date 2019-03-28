@@ -14,7 +14,7 @@ type RoleUserRel struct {
 
 var roleUserRelTable = common.TableName("role_user_rel")
 
-func (c *RoleUserRel) TableName() string {
+func (c *RoleUserRel) GetTableName() string {
 	return roleUserRelTable
 }
 

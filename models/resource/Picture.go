@@ -20,7 +20,7 @@ type Picture struct {
 
 var picTable = common.TableName("picture")
 
-func (p *Picture) TableName() string {
+func (p *Picture) GetTableName() string {
 	return picTable
 }
 

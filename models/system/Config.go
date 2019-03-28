@@ -20,7 +20,7 @@ type Config struct {
 
 var configTable = common.TableName("config")
 
-func (c *Config) TableName() string {
+func (c *Config) GetTableName() string {
 	return configTable
 }
 

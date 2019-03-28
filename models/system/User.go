@@ -37,7 +37,7 @@ type User struct {
 var userTable = common.TableName("user")
 
 
-func (u *User) TableName() string {
+func (u *User) GetTableName() string {
 	return userTable
 }
 
