@@ -6,12 +6,12 @@
 package models
 
 import (
+	"BeeGoWeb/models/log"
+	"BeeGoWeb/models/system"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
 	"net/url"
-	"BeeGoWeb/models/log"
-	"BeeGoWeb/models/system"
 )
 
 

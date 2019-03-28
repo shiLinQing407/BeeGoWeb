@@ -26,7 +26,7 @@ type BaseQueryParam struct {
 }
 
 func TableName(name string) string {
-	table := fmt.Sprintf("go_%s", name)
-	fmt.Println(table)
+	table := fmt.Sprintf("%s", name)
+	//fmt.Println(table)
 	return table
 }

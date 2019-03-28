@@ -2,11 +2,11 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	models "BeeGoWeb/models/system"
-	common "BeeGoWeb/models/common"
 	"BeeGoWeb/libs"
 	"strings"
 	"strconv"
+	common "BeeGoWeb/models/common"
+	models "BeeGoWeb/models/system"
 	"fmt"
 )
 
