@@ -6,7 +6,7 @@
 package common
 
 import (
-	"github.com/astaxie/beego"
+	"fmt"
 )
 
 
@@ -26,5 +26,7 @@ type BaseQueryParam struct {
 }
 
 func TableName(name string) string {
-	return beego.AppConfig.String("dbprefix") + name
+	table := fmt.Sprintf("go_%s", name)
+	fmt.Println(table)
+	return table
 }

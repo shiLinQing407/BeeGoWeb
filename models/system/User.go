@@ -1,8 +1,8 @@
 package system
 
 import (
-	"github.com/astaxie/beego/orm"
 	"BeeGoWeb/models/common"
+	"github.com/astaxie/beego/orm"
 )
 
 // BackendUserQueryParam 用于查询的类
