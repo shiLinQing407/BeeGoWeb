@@ -1,0 +1,149 @@
+2019/03/28 01:10:57.414 [I] [asm_amd64.s:2361]  http server Running on http://127.0.0.1:8080
+2019/03/28 01:16:35.548 [I] [asm_amd64.s:2361]  http server Running on http://127.0.0.1:8080
+2019/03/28 01:17:10.045 [I] [asm_amd64.s:2361]  http server Running on http://127.0.0.1:8080
+2019/03/28 01:17:10.045 [C] [asm_amd64.s:2361]  ListenAndServe:  listen tcp 127.0.0.1:8080: bind: address already in use
+2019/03/28 01:17:16.033 [I] [asm_amd64.s:2361]  http server Running on http://127.0.0.1:8080
+2019/03/28 01:17:31.474 [I] [asm_amd64.s:2361]  http server Running on http://127.0.0.1:8080
+2019/03/28 01:18:45.061 [I] [asm_amd64.s:2361]  http server Running on http://127.0.0.1:8080
+2019/03/28 01:18:51.254 [D] [adminbase.go:121]  未登录重定向至登录界面 
+2019/03/28 01:18:51.254 [D] [adminbase.go:122]  /admin/login 
+2019/03/28 01:18:51.256 [D] [login.go:19]  here is admin Login,uid= 
+2019/03/28 01:18:51.258 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   2.263915ms|   match|[44m GET     [0m /admin/login   r:/admin/login
+2019/03/28 01:18:51.310 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   5.268146ms|   match|[44m GET     [0m /static/css/bootstrap.min.css
+2019/03/28 01:18:51.313 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   6.312551ms|   match|[44m GET     [0m /static/css/font-awesome.css
+2019/03/28 01:18:51.318 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   7.266453ms|   match|[44m GET     [0m /static/js/bootstrap.js
+2019/03/28 01:18:51.319 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  14.928951ms|   match|[44m GET     [0m /static/css/bootstrap-responsive.min.css
+2019/03/28 01:18:51.321 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  14.887379ms|   match|[44m GET     [0m /static/css/style.css
+2019/03/28 01:18:51.322 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  13.833876ms|   match|[44m GET     [0m /static/css/pages/signin.css
+2019/03/28 01:18:51.327 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  18.535169ms|   match|[44m GET     [0m /static/js/jquery-1.7.2.min.js
+2019/03/28 01:18:51.490 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   1.654281ms|   match|[44m GET     [0m /static/img/body-bg.png
+2019/03/28 01:18:51.492 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|    788.301µs|   match|[44m GET     [0m /static/img/signin/user.png
+2019/03/28 01:18:51.493 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|    268.967µs|   match|[44m GET     [0m /static/img/signin/password.png
+2019/03/28 01:18:51.501 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|    529.535µs|   match|[44m GET     [0m /static/img/signin/check.png
+2019/03/28 01:18:51.604 [D] [server.go:2694]  |      127.0.0.1|[43m 404 [0m|    296.774µs| nomatch|[44m GET     [0m /favicon.ico
+2019/03/28 01:23:07.357 [D] [login.go:19]  here is admin Login,uid= 
+2019/03/28 01:23:07.372 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:23:07.374 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|    3.31744ms|   match|[44m GET     [0m /admin   r:/admin
+2019/03/28 01:23:07.391 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   6.775889ms|   match|[44m GET     [0m /static/plugins/bootstrap/css/bootstrap.min.css
+2019/03/28 01:23:07.395 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   9.807223ms|   match|[44m GET     [0m /static/plugins/font-awesome/css/font-awesome.min.css
+2019/03/28 01:23:07.397 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   3.721819ms|   match|[44m GET     [0m /static/plugins/bootstrap-select/css/bootstrap-select.min.css
+2019/03/28 01:23:07.403 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  16.148403ms|   match|[44m GET     [0m /static/plugins/Ionicons/css/ionicons.min.css
+2019/03/28 01:23:07.403 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  18.403095ms|   match|[44m GET     [0m /static/plugins/bootstrap-table/bootstrap-table.min.css
+2019/03/28 01:23:07.407 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   19.65198ms|   match|[44m GET     [0m /static/lte/css/AdminLTE.min.css
+2019/03/28 01:23:07.408 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  19.991062ms|   match|[44m GET     [0m /static/lte/css/skins/skin-blue.min.css
+2019/03/28 01:23:07.409 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  12.104459ms|   match|[44m GET     [0m /static/sdtheme/css/sdtheme.css
+2019/03/28 01:23:07.415 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  17.017573ms|   match|[44m GET     [0m /static/js/jquery-2.1.1.js
+2019/03/28 01:23:07.417 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  13.118334ms|   match|[44m GET     [0m /static/plugins/bootstrap/js/bootstrap.min.js
+2019/03/28 01:23:07.419 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   13.80412ms|   match|[44m GET     [0m /static/lte/js/adminlte.min.js
+2019/03/28 01:23:07.420 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   11.56849ms|   match|[44m GET     [0m /static/plugins/layer-v3.1.0/layer.js
+2019/03/28 01:23:07.421 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  10.051703ms|   match|[44m GET     [0m /static/plugins/jquery-sdajax/jquery.sdajax.min.js
+2019/03/28 01:23:07.421 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  10.520805ms|   match|[44m GET     [0m /static/plugins/jquery.cookie.js
+2019/03/28 01:23:07.423 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   6.925854ms|   match|[44m GET     [0m /static/plugins/bootstrap-select/js/bootstrap-select.min.js
+2019/03/28 01:23:07.423 [D] [server.go:2694]  |      127.0.0.1|[43m 404 [0m|    191.581µs| nomatch|[44m GET     [0m /static/upload/1.jpg
+2019/03/28 01:23:07.423 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   4.761342ms|   match|[44m GET     [0m /static/plugins/bootstrap-select/js/i18n/defaults-zh_CN.min.js
+2019/03/28 01:23:07.425 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|    5.23409ms|   match|[44m GET     [0m /static/sdtheme/scripts/sdtheme.js
+2019/03/28 01:23:07.426 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   4.664991ms|   match|[44m GET     [0m /static/product/scripts/rms.js
+2019/03/28 01:23:07.479 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   2.061885ms|   match|[44m GET     [0m /static/plugins/layer-v3.1.0/theme/default/layer.css
+2019/03/28 01:23:07.588 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|    526.262µs|   match|[44m GET     [0m /static/plugins/layer-v3.1.0/theme/default/loading-0.gif
+2019/03/28 01:23:07.594 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:23:07.598 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|    905.554µs|   match|[44m GET     [0m /static/plugins/font-awesome/fonts/fontawesome-webfont.woff2
+2019/03/28 01:23:07.599 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   1.549728ms|   match|[44m GET     [0m /static/plugins/Ionicons/fonts/ionicons.ttf
+2019/03/28 01:23:12.494 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:23:12.496 [C] [asm_amd64.s:573]  the request url is  /admin/log/system
+2019/03/28 01:23:12.496 [C] [asm_amd64.s:573]  Handler crashed with error can't find templatefile in the path:views/admin/log/system.html
+2019/03/28 01:23:12.497 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/runtime/asm_amd64.s:573
+2019/03/28 01:23:12.497 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/runtime/panic.go:502
+2019/03/28 01:23:12.497 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/template.go:73
+2019/03/28 01:23:12.497 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/controller.go:264
+2019/03/28 01:23:12.497 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/controller.go:215
+2019/03/28 01:23:12.497 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/controller.go:195
+2019/03/28 01:23:12.497 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/router.go:859
+2019/03/28 01:23:12.497 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/net/http/server.go:2694
+2019/03/28 01:23:12.497 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/net/http/server.go:1830
+2019/03/28 01:23:12.497 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/runtime/asm_amd64.s:2361
+2019/03/28 01:23:12.497 [server.go:2921]  [HTTP] http: multiple response.WriteHeader calls
+2019/03/28 01:23:14.326 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:23:16.006 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:23:16.009 [C] [asm_amd64.s:573]  the request url is  /admin/log/opera
+2019/03/28 01:23:16.009 [C] [asm_amd64.s:573]  Handler crashed with error can't find templatefile in the path:views/admin/log/opera.html
+2019/03/28 01:23:16.009 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/runtime/asm_amd64.s:573
+2019/03/28 01:23:16.009 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/runtime/panic.go:502
+2019/03/28 01:23:16.009 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/template.go:73
+2019/03/28 01:23:16.009 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/controller.go:264
+2019/03/28 01:23:16.009 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/controller.go:215
+2019/03/28 01:23:16.009 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/controller.go:195
+2019/03/28 01:23:16.009 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/router.go:859
+2019/03/28 01:23:16.009 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/net/http/server.go:2694
+2019/03/28 01:23:16.009 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/net/http/server.go:1830
+2019/03/28 01:23:16.009 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/runtime/asm_amd64.s:2361
+2019/03/28 01:23:16.009 [server.go:2921]  [HTTP] http: multiple response.WriteHeader calls
+2019/03/28 01:23:20.948 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:23:22.495 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:23:22.498 [C] [asm_amd64.s:573]  the request url is  /admin/log/system
+2019/03/28 01:23:22.498 [C] [asm_amd64.s:573]  Handler crashed with error can't find templatefile in the path:views/admin/log/system.html
+2019/03/28 01:23:22.498 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/runtime/asm_amd64.s:573
+2019/03/28 01:23:22.498 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/runtime/panic.go:502
+2019/03/28 01:23:22.498 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/template.go:73
+2019/03/28 01:23:22.498 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/controller.go:264
+2019/03/28 01:23:22.498 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/controller.go:215
+2019/03/28 01:23:22.498 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/controller.go:195
+2019/03/28 01:23:22.498 [C] [asm_amd64.s:573]  /Users/shilinqing/Sites/Golang/learn_go/go_download/src/github.com/astaxie/beego/router.go:859
+2019/03/28 01:23:22.498 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/net/http/server.go:2694
+2019/03/28 01:23:22.498 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/net/http/server.go:1830
+2019/03/28 01:23:22.498 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/runtime/asm_amd64.s:2361
+2019/03/28 01:23:22.498 [server.go:2921]  [HTTP] http: multiple response.WriteHeader calls
+2019/03/28 01:23:49.915 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:26:47.227 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:26:47.230 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   3.638097ms|   match|[44m GET     [0m /admin   r:/admin
+2019/03/28 01:26:47.248 [D] [server.go:2694]  |      127.0.0.1|[43m 404 [0m|    226.408µs| nomatch|[44m GET     [0m /static/upload/1.jpg
+2019/03/28 01:26:47.334 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:26:49.807 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|    617.237µs|   match|[44m GET     [0m /static/plugins/bootstrap-select/js/bootstrap-select.js.map
+2019/03/28 01:26:49.819 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|     69.304µs|   match|[44m GET     [0m /static/sdtheme/css/sdtheme.css.map
+2019/03/28 01:27:06.622 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:27:06.626 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   3.832815ms|   match|[44m GET     [0m /admin   r:/admin
+2019/03/28 01:27:06.640 [D] [server.go:2694]  |      127.0.0.1|[43m 404 [0m|    369.114µs| nomatch|[44m GET     [0m /static/upload/1.jpg
+2019/03/28 01:27:06.805 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:27:14.359 [I] [asm_amd64.s:2361]  http server Running on http://127.0.0.1:8080
+2019/03/28 01:27:15.629 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:27:15.632 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   4.070064ms|   match|[44m GET     [0m /admin   r:/admin
+2019/03/28 01:27:15.649 [D] [server.go:2694]  |      127.0.0.1|[43m 404 [0m|    226.508µs| nomatch|[44m GET     [0m /static/upload/1.jpg
+2019/03/28 01:27:15.816 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:28:15.535 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:28:15.539 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   3.716572ms|   match|[44m GET     [0m /admin   r:/admin
+2019/03/28 01:28:15.568 [D] [server.go:2694]  |      127.0.0.1|[43m 404 [0m|    243.838µs| nomatch|[44m GET     [0m /static/upload/1.jpg
+2019/03/28 01:28:16.264 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:28:16.530 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:28:16.534 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   4.453988ms|   match|[44m GET     [0m /admin   r:/admin
+2019/03/28 01:28:16.548 [D] [server.go:2694]  |      127.0.0.1|[43m 404 [0m|    229.636µs| nomatch|[44m GET     [0m /static/upload/1.jpg
+2019/03/28 01:28:16.713 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:31:50.077 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:31:50.077 [D] [role.go:20]  RoleController-Index 
+2019/03/28 01:31:50.082 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   5.502307ms|   match|[44m GET     [0m /admin/role/index   r:/admin/role/index
+2019/03/28 01:31:50.095 [D] [server.go:2694]  |      127.0.0.1|[43m 404 [0m|     274.76µs| nomatch|[44m GET     [0m /static/upload/1.jpg
+2019/03/28 01:31:50.114 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  18.729438ms|   match|[44m GET     [0m /static/plugins/bootstrap-table/bootstrap-table.js
+2019/03/28 01:31:50.207 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   1.230564ms|   match|[44m GET     [0m /static/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js
+2019/03/28 01:31:50.209 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   2.838885ms|   match|[44m GET     [0m /static/plugins/bootstrap-table/cookie/bootstrap-table-cookie.js
+2019/03/28 01:31:50.214 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   7.321709ms|   match|[44m GET     [0m /static/plugins/x-editable/js/bootstrap-editable.min.js
+2019/03/28 01:31:50.215 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   8.197086ms|   match|[44m GET     [0m /static/plugins/bootstrap-table/bootstrap-table-editable.js
+2019/03/28 01:31:50.277 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:31:50.298 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:31:50.298 [D] [role.go:51]  RoleDataGrid 
+2019/03/28 01:31:50.298 [D] [Role.go:96]  RolePageList 
+2019/03/28 01:31:50.299 [D] [Role.go:115]  roles 
+2019/03/28 01:31:50.299 [D] [Role.go:116]  [0xc4205ce910 0xc4205ce9b0 0xc4205ced20] 
+2019/03/28 01:31:50.299 [D] [Role.go:117]  total 
+2019/03/28 01:31:50.300 [D] [Role.go:118]  3 
+2019/03/28 01:31:50.300 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   2.440605ms|   match|[46m POST    [0m /admin/role/datagrid   r:/admin/role/datagrid
+2019/03/28 01:31:50.312 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|    529.427µs|   match|[44m GET     [0m /static/plugins/bootstrap/fonts/bootstrap/glyphicons-halflings-regular.woff2
+2019/03/28 01:31:55.070 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|    941.091µs|   match|[44m GET     [0m /static/plugins/layer-v3.1.0/theme/default/loading-1.gif
+2019/03/28 01:31:55.070 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   1.247648ms|   match|[44m GET     [0m /static/plugins/layer-v3.1.0/theme/default/icon.png
+2019/03/28 01:31:55.073 [D] [adminbase.go:103]  用户已登录状态 
+2019/03/28 01:31:55.073 [D] [role.go:92]  RoleEdit 
+2019/03/28 01:31:55.075 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   3.005168ms|   match|[44m GET     [0m /admin/role/edit/4   r:/admin/role/edit/?:id
+2019/03/28 01:31:55.083 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|    840.286µs|   match|[44m GET     [0m /static/css/public.css
+2019/03/28 01:31:55.100 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  16.813087ms|   match|[44m GET     [0m /static/plugins/jquery.min.js
+2019/03/28 01:31:55.102 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  18.440797ms|   match|[44m GET     [0m /static/plugins/jquery-validation/jquery.validate.min.js
+2019/03/28 01:31:55.103 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  19.778145ms|   match|[44m GET     [0m /static/plugins/bootstrap-fileinput-jasny/bootstrap-fileinput.css
+2019/03/28 01:31:55.104 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  19.001679ms|   match|[44m GET     [0m /static/plugins/jquery-validation/localization/messages_zh.min.js
+2019/03/28 01:31:55.104 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  19.457593ms|   match|[44m GET     [0m /static/sdtheme/scripts/sdvalidate.js
+2019/03/28 10:59:53.565 [I] [asm_amd64.s:2361]  http server Running on http://127.0.0.1:8080
