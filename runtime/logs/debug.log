@@ -303,3 +303,14 @@
 2019/03/28 17:17:17.663 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/net/http/server.go:1830
 2019/03/28 17:17:17.663 [C] [asm_amd64.s:573]  /usr/local/Cellar/go/1.10.1/libexec/src/runtime/asm_amd64.s:2361
 2019/03/28 17:17:17.663 [server.go:2921]  [HTTP] http: multiple response.WriteHeader calls
+2019/03/31 00:10:14.959 [I] [asm_amd64.s:2361]  http server Running on http://127.0.0.1:8080
+2019/03/31 00:10:17.225 [D] [base.go:92]  用户已登录状态 
+2019/03/31 00:10:17.227 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   7.036958ms|   match|[44m GET     [0m /     r:/
+2019/03/31 00:10:17.349 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|   6.712442ms|   match|[44m GET     [0m /static/js/jquery-2.1.1.js
+2019/03/31 00:10:17.371 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  28.128368ms|   match|[44m GET     [0m /static/iview/styles/iview.css
+2019/03/31 00:10:17.378 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  35.265451ms|   match|[44m GET     [0m /static/vue/vue.min.js
+2019/03/31 00:10:17.481 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  137.93134ms|   match|[44m GET     [0m /static/iview/iview.js
+2019/03/31 00:10:17.515 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  171.30495ms|   match|[44m GET     [0m /static/iview/iview.min.js
+2019/03/31 00:10:17.801 [D] [base.go:92]  用户已登录状态 
+2019/03/31 00:10:22.165 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  21.839219ms|   match|[44m GET     [0m /static/iview/iview.min.js.map
+2019/03/31 00:10:22.174 [D] [server.go:2694]  |      127.0.0.1|[42m 200 [0m|  31.081641ms|   match|[44m GET     [0m /static/iview/iview.js.map
