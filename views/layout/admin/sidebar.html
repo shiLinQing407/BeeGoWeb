@@ -1,0 +1,17 @@
+<section class="sidebar">
+    <!-- Sidebar Menu -->
+    <ul class="sidebar-menu" id="pageSidebar" data-widget="tree">
+
+    </ul>
+</section>
+
+<script>
+    $(function () {
+        //页面左侧菜单初始化
+        rms.pageSidebarInit({
+            slideBarBox:'#pageSidebar',                         //菜单容器
+            url:'{{urlfor "MenuController.UserMenuTree"}}', //菜单数据地址
+            cur:'{{.activeSidebarUrl}}'             //当前激活的菜单地址
+        });
+    });
+</script>

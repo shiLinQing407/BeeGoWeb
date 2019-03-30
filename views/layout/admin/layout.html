@@ -1,0 +1,89 @@
+<!-- 用于列表页 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>{{.pageTitle}}</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="/static/css/style.css" rel="stylesheet">
+{{template "layout/admin/head.html"}}
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- Main Header -->
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="javascript:;" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>Skr</b> Admin</span>
+            <span class="logo-lg"><b>Skr</b> Admin</span>
+        </a>
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- Tasks Menu -->
+                    <!-- User Account Menu -->
+                    <li class="dropdown user user-menu">
+                        <!-- Menu Toggle Button -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            {{if .user.Avatar}}
+                                <img src="{{.user.Avatar}}" class="user-image" alt="User Image">
+                            {{else}}
+                                <img src="/static/img/signin/user.png" class="user-image" alt="User Image">
+                            {{end}}
+                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                            <span class="hidden-xs">{{.user.UserName}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- The user image in the menu -->
+                            <li class="user-header">
+                                <img src="{{.user.Avatar}}" class="img-circle" alt="User Image">
+                                <p> {{.user.emall}}</p>
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="{{urlfor "UserCenterController.Profile" }}" class="btn btn-default btn-flat"> 个人信息</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="{{urlfor "LoginController.Logout" }}" class="btn btn-default btn-flat"> 退  出</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
+                    <li>
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+    {{ template "layout/admin/sidebar.html" }}
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        {{.LayoutContent}}
+    </div>
+
+    <footer class="main-footer">
+    </footer>
+</div>
+<!-- ./wrapper -->
+{{.datagrid}}
+</body>
+
+</html>

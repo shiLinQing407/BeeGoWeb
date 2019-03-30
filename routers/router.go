@@ -30,10 +30,10 @@ func init() {
 	//beego.Router("/login/gettime", &admin.LoginController{}, "*:GetTime") //获取系统时间
 	//
 	////用户有权管理的菜单列表（包括区域）
-	//beego.Router("/admin/menu/menutree", &admin.MenuController{}, "POST:UserMenuTree")
+	beego.Router("/admin/menu/menutree", &admin.MenuController{}, "POST:UserMenuTree")
 	//
 	////菜单管理
-	//beego.Router("/admin/menu/index", &admin.MenuController{}, "*:Index")
+	beego.Router("/admin/menu/index", &admin.MenuController{}, "*:Index")
 	//
 	////权限管理
 	//beego.Router("/admin/auth/index", &admin.AuthController{}, "*:Index")
