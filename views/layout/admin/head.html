@@ -1,14 +1,20 @@
 <meta charset="utf-8">
 <meta name="renderer" content="webkit">
-<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>{{.pageTitle}}</title>
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-<link href="/static/css/iview.css" rel="stylesheet">
-<script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>
-<script type="text/javascript" src="/static/js/iview.min.js"></script>
+
+{{/*vue*/}}
+<script type="text/javascript" src="/static/vue/vue.min.js"></script>
+
+{{/*iview*/}}
+<link rel="stylesheet" type="text/css" href="/static/iview/styles/iview.css">
+<script type="text/javascript" src="/static/iview/iview.js"></script>
+<script type="text/javascript" src="/static/iview/iview.min.js"></script>
+
 <script type="text/javascript">
     function empty(data) {
-        if (data && typeof data != "undefined" && data != null && data != '' && ((Array.isArray(data) && data.length > 0) || !Array.isArray(data)) && ((typeof data == "object" && JSON.stringify(data) != "{}") || typeof data != "object") ) {
+        if (data && typeof data != "undefined" && data != null && data != '' && ((Array.isArray(data) && data.length > 0) || !Array.isArray(data)) && ((typeof data == "object" && JSON.stringify(data) != "{}") || typeof data != "object")) {
             return false;
         } else {
             return true;
@@ -23,13 +29,14 @@
      * @returns {boolean}
      */
     function inArray(search, array) {
-        for(let key in array){
-            if(array[key] == search){
+        for (let key in array) {
+            if (array[key] == search) {
                 return true;
             }
         }
         return false;
     }
+
     /**
      * 返回输入数组中某个单一列的值。
      * @param array
@@ -57,14 +64,14 @@
     }
 
     /**
-     * 	搜索数组中给定的值并返回键名。
+     *    搜索数组中给定的值并返回键名。
      * @param search
      * @param array
      * @returns {boolean}
      */
     function arraySeach(search, array) {
-        for(let key in array){
-            if(array[key] == search){
+        for (let key in array) {
+            if (array[key] == search) {
                 return key;
             }
         }

@@ -104,13 +104,13 @@ func (this *BaseController) auth(controllerName, actionName string) {
 			//models.LogAdd(log)
 		}
 	}
-	//未登录重定向至登录界面
-	if this.userId == 0 && (this.controllerName != "login" ||
-		(this.controllerName == "login" && this.actionName != "logout" && this.actionName != "login" && this.actionName != "gettime")) {
-		beego.Debug("未登录重定向至登录界面")
-		beego.Debug("/admin" + beego.URLFor("LoginController.Login"))
-		this.redirect("/admin" + beego.URLFor("LoginController.Login"))
-	}
+	////未登录重定向至登录界面
+	//if this.userId == 0 && (this.controllerName != "login" ||
+	//	(this.controllerName == "login" && this.actionName != "logout" && this.actionName != "login" && this.actionName != "gettime")) {
+	//	beego.Debug("未登录重定向至登录界面")
+	//	beego.Debug("/admin" + beego.URLFor("LoginController.Login"))
+	//	this.redirect("/admin" + beego.URLFor("LoginController.Login"))
+	//}
 }
 
 //渲染模版
