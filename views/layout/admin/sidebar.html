@@ -4,7 +4,7 @@
 
         <Row>
             <Col span="8">
-            <i-menu :theme="theme2">
+            <i-menu theme="light">
                 <Submenu name="1">
                     <template slot="title">
                         <Icon type="ios-paper"></Icon>
@@ -45,37 +45,29 @@
 </section>
 
 <script>
-    $(function () {
-    {{/*//页面左侧菜单初始化*/}}
-        new Vue({
-            el: '#sidebar',
-            data: {
-                theme2: 'light'
-            },
-            methods: {
-                loadMenu() {
-                    $.ajax({
-                        type: "POST",
-                        url: '{{urlfor "MenuController.UserMenuTree"}}',
-                        dataType: "json",
-                        success: function (data) {
-                            console.log(data);
-                        },
-                        error: function () {
+    new Vue({
+        el: '#sidebar',
+        data: {
+        },
+        created(){
 
-                        }
-                    });
-                }
-            },
-            mounted: function () {
-                this.loadMenu();
+        },
+        methods: {
+            loadMenu() {
+                var _this = this;
+                $c.loading(this);
+                $c.ajax('{{urlfor "MenuController.UserMenuTree"}}',{}, function (ret) {
+                    if(ret.code === 0){
+
+                    }else{
+                        $c.error(_this,ret.message)
+                    }
+                })
             }
-        });
-
-    {{/*rms.pageSidebarInit({*/}}
-    {{/*slideBarBox:'#pageSidebar',                         //菜单容器*/}}
-    {{/*url:'{{urlfor "MenuController.UserMenuTree"}}', //菜单数据地址*/}}
-    {{/*cur:'{{.activeSidebarUrl}}'             //当前激活的菜单地址*/}}
-    {{/*});*/}}
+        },
+        mounted: function () {
+            this.loadMenu();
+        }
     });
+
 </script>
