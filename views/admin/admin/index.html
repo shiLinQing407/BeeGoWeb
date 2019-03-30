@@ -1,43 +1,13 @@
-<!-- Main content -->
-<section class="content container-fluid">
-    <!-- 页面内容开始 -->
-    <div class="row">
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3>150</h3>
-                    <p>新订单</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
-                </div>
-                <a href="#" class="small-box-footer">更多信息 <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
+<i-button @click="show">Click me!</i-button>
+<Modal title="Welcome">欢迎使用 iView</Modal>
 
-    </div>
-    <!-- /.row -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Title</h3>
-                </div>
-                <div class="box-body">
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 页面内容结束 -->
-</section>
-<script src="https://unpkg.com/vue@2.1.3/dist/vue.min.js"></script>
 <script>
     new Vue({
         el: '#app',
 
-        data: {},
+        data: {
+            show:1,
+        },
 
         created: function () {
             console.log('vue created')
