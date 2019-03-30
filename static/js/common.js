@@ -9,7 +9,7 @@ $c.ajax = function (url, params, callback, method, type = "json") {
         url: url,
         data: params,
         method: method,
-        type: type,
+        // type: type,
         success: function (ret) {
             if (typeof callback == 'function') {
                 callback(ret)

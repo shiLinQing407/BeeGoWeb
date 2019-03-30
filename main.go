@@ -15,6 +15,7 @@ func init(){
 	//初始化orm
 	models.Init()
 	// 生产环境不输出debug日志
+
 	if beego.AppConfig.String("runmode") == "dev" {
 		beego.SetLevel(beego.LevelDebug)
 	}
