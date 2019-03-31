@@ -25,6 +25,7 @@ func (this *MenuController) Index() {
 //UserMenuTree 获取用户有权管理的菜单、区域列表
 func (this *MenuController) UserMenuTree() {
 	uid := this.curUser.Id
+	uid = 1
 	//获取用户有权管理的菜单列表（包括区域）
 	tree := system.MenuListGetByUid(uid, 1)
 	////转换UrlFor 2 LinkUrl
