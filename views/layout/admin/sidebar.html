@@ -22,7 +22,6 @@
         el: '#sidebar',
         data: {
             menu_list : '',
-            menu: null
         },
         created(){
 
@@ -32,10 +31,8 @@
                 let _this = this;
                 $c.loading(this);
                 $c.ajax('[[urlfor "MenuController.UserMenuTree"]]',{}, function (ret) {
-                    console.log(_this.menu_list);
                     if(ret.code === 0){
                         _this.menu_list = _this.initMenu(ret.data);
-                        console.log(_this.menu_list);
                     }else{
                         $c.error(_this,ret.message);
                     }
@@ -56,9 +53,7 @@
                     //菜单
                     if (e.Type === 1) {
                         //递归加载子节点
-                        menu[i].Sons.push(_this.addSonNode(e,data));
-                        console.log(menu[i].TitleCn);
-                        console.log(menu[i].Sons);
+                        _this.addSonNode(e, data);
                     } else if (e.Type === 0) {
                         //如果是区域，先添加header
                         //添加区域的子节点
@@ -72,6 +67,7 @@
                 });
                 return menu;
             },
+            //cur 是实参
             addSonNode(cur, list) {
                 let _this = this;
                 if (!$c.isEmpty(cur.SonNum) && cur.SonNum > 0) {
@@ -80,22 +76,15 @@
                         if (is_child) {
                             e.Sons = [];
                             cur.Sons.push(e);
-                            // console.log("match");
-                            // console.log(e);
                         }
                         return is_child;
                     }).each(function (i, e) {
-                        console.log("find child");
-                        console.log(e);
                         //递归调用，显示子节点
-                        cur.Sons[i].Sons.push(_this.addSonNode(e, list));
+                        _this.addSonNode(e, list);
                     });
                 } else {
                     cur.Sons = [];
                 }
-                console.log(cur.TitleCn);
-                console.log(cur);
-                return cur;
             }
         },
         mounted: function () {
