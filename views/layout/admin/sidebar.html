@@ -1,14 +1,13 @@
 <div class="layui-side layui-bg-black" id="sidebar">
     <div class="layui-side-scroll">
-        <ul class="layui-nav layui-nav-tree" lay-shrink="all" lay-filter="">
-                {{/*layui-nav-itemed  展开*/}}
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" lay-filter="sidebar-nav">
             <li class="layui-nav-item" v-for="(menu, menu_idx) in menuList">
                 <a class="" href="javascript:;">
                     <i class="layui-icon">&#xe62a;</i> [[menu.TitleCn]]
                 </a>
                 <dl class="layui-nav-child">
                     <dd v-for="(subMenu, sub_menu_idx) in menu.Sons">
-                        <a href="javascript:;" path="user.html" tab-id="1-1"><i class="iconfont icon-dianliyonghuzongshu"></i> [[subMenu.TitleCn]]</a>
+                        <a href="javascript:;" :path="subMenu.LinkUrl" tab-id="1-1"><i class="iconfont icon-dianliyonghuzongshu"></i> [[subMenu.TitleCn]]</a>
                     </dd>
                 </dl>
             </li>

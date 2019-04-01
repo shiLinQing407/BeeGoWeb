@@ -13,7 +13,7 @@
     <div class="content-body">
         <div class="layui-tab layui-tab-brief" lay-filter="ok-tab" lay-allowClose="true">
             <ul class="layui-tab-title">
-                <li class="layui-this"><i class="layui-icon">&#xe68e;</i> 控制台</li>
+                <li class="layui-this" lay-id="111"><i class="layui-icon">&#xe68e;</i> 控制台</li>
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
@@ -118,16 +118,14 @@
     layui.use('element', function(){
         let element = layui.element;
 
-        //监听Tab切换，以改变地址hash值
-        element.on('tab(test1)', function(){
-            location.hash = 'test1='+ this.getAttribute('lay-id');
-        });
-
         //监听选项卡切换
-        element.on('tab(filter)', function(data){
+        element.on('tab(ok-tab)', function(data){
             console.log(this); //当前Tab标题所在的原始DOM元素
             console.log(data.index); //得到当前Tab的所在下标
             console.log(data.elem); //得到当前的Tab大容器
+
+            //监听Tab切换，以改变地址hash值
+            location.hash = 'ok-tab='+ this.getAttribute('lay-id');
         });
 
         //监听选项卡删除
@@ -138,7 +136,8 @@
         });
 
         //监听导航菜单的点击   没有存在该菜单对应的选项卡则生成，
-        element.on('nav(filter)', function(elem){
+        element.on('nav(sidebar-nav)', function(elem){
+            console.log("click sidebar-nav"); //得到当前点击的DOM对象
             console.log(elem); //得到当前点击的DOM对象
             //没有存在该菜单对应的选项卡则生成
             element.tabAdd('ok-tab', {
@@ -149,7 +148,9 @@
 
             // 已有则切换至该选项卡
             // 用于外部切换到指定的Tab项上，参数同上，如： element.tabChange('demo', 'layid'); //切换到 lay-id="yyy" 的这一项
-            element.tabChange(filter, layid);
+            //获取hash来切换选项卡，假设当前地址的hash为lay-id对应的值
+            let layid = location.hash.replace(/^#ok-tab=/, '');
+            element.tabChange('ok-tab', layid); //假设当前地址为：http://a.com#test1=222，那么选项卡会自动切换到“发送消息”这一项
 
         });
     });
