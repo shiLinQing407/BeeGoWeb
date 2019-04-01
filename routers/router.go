@@ -17,11 +17,11 @@ func init() {
 	})
 	/*路由设置*/
 	//固定路由
-	beego.Router("/", &admin.AdminController{}, "*:Index")
+	beego.Router("/", &admin.AdminController{}, "*:Enter")
 	//beego.Router("/login", &web.LoginController{}, "*:Login")
 	//beego.Router("/logout", &web.LoginController{}, "*:Logout")
 	/******************************		后台路由	******************************/
-	//beego.Router("/admin", &admin.AdminController{}, "*:Index")
+	beego.Router("/admin/index", &admin.AdminController{}, "*:Index")
 	//beego.Router("/admin/login", &admin.LoginController{}, "*:Login")
 	//beego.Router("/admin/logout", &admin.LoginController{}, "*:Logout")
 	//beego.Router("/admin/config", &admin.ConfigController{}, "*:Config") //设置网站配置

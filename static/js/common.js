@@ -88,6 +88,30 @@ $c.arraySeach = function (search, array) {
     return false;
 }
 
+/**
+ * 获取当前时间
+ */
+$c.setDate = function(){
+    var date = new Date();
+    var year = date.getFullYear();
+    nowDate1 = year + "-" + addZero((date.getMonth() + 1)) + "-" + addZero(date.getDate()) + "  ";
+    nowDate1 += $c.addZero(date.getHours()) + ":" + addZero(date.getMinutes()) + ":" + addZero(date.getSeconds());
+    return nowDate1;
+}
+
+/**
+ * 年月日是分秒为10以下的数字则添加0字符串
+ * @param time
+ * @returns {number | *}
+ */
+$c.addZero = function(time) {
+    var i = parseInt(time);
+    if (i / 10 < 1) {
+        i = "0" + i;
+    }
+    return i;
+}
+
 $c.error = function (vue, msg, duration = 2, onClose = '') {
     vue.$Message.error(msg, duration, onClose);
 }

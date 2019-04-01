@@ -6,14 +6,23 @@
 package controllers
 
 import (
+	"BeeGoWeb/models/system"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils"
-	"BeeGoWeb/models/system"
 	"BeeGoWeb/libs"
+
 )
 
 type AdminController struct {
 	BaseController
+}
+
+/**
+ 入口方法
+ */
+func (this *AdminController) Enter(){
+	this.Layout = "layout/admin/layout.html"
+	this.TplName = "admin/admin/index.html"
 }
 
 func (this *AdminController) Index() {

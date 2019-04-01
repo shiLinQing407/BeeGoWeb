@@ -121,7 +121,8 @@ func (this *BaseController) display(tpl ...string) {
 	} else {
 		tplname = "admin/" + this.controllerName + "/" + this.actionName + ".html"
 	}
-	this.Layout = "layout/admin/layout.html"
+	//okadmin - iframe 加载方式 ， 子页面加载子页面的layout
+	this.Layout = "layout/admin/child_layout.html"
 	this.TplName = tplname
 }
 
