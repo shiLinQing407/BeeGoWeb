@@ -5065,6 +5065,7 @@
   }
 
   function Vue (options) {
+    options.delimiters= ["[[", "]]"];
     if (!(this instanceof Vue)
     ) {
       warn('Vue is a constructor and should be called with the `new` keyword');

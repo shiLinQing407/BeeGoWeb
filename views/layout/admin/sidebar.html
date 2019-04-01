@@ -1,54 +1,15 @@
-<div class="layui-side layui-bg-black">
+<div class="layui-side layui-bg-black" id="sidebar">
     <div class="layui-side-scroll">
         <ul class="layui-nav layui-nav-tree" lay-shrink="all" lay-filter="">
-            <li class="layui-nav-item layui-nav-itemed">
+                {{/*layui-nav-itemed  展开*/}}
+            <li class="layui-nav-item" v-for="(menu, menu_idx) in menuList">
                 <a class="" href="javascript:;">
-                    <i class="layui-icon">&#xe62a;</i> 常用页面
+                    <i class="layui-icon">&#xe62a;</i> [[menu.TitleCn]]
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="javascript:;" path="user.html" tab-id="1-1"><i class="iconfont icon-dianliyonghuzongshu"></i> 用户列表</a></dd>
-                    <dd><a href="javascript:;" path="article.html" tab-id="1-2"><i class="iconfont icon-wenzhang2"></i> 文章列表</a></dd>
-                    <dd><a href="javascript:;" path="role.html" tab-id="1-3"><i class="iconfont icon-jiaose"></i> 角色列表</a></dd>
-                    <dd><a href="javascript:;" path="permission.html" tab-id="1-4"><i class="iconfont icon-jiaoseshouquan"></i> 权限列表</a></dd>
-                    <dd><a href="javascript:;" path="process.html" tab-id="1-5"><i class="iconfont icon-liucheng"></i> 流程列表</a></dd>
-                    <dd><a href="javascript:;" path="image.html" tab-id="1-6"><i class="iconfont icon-tupian"></i> 图片列表</a></dd>
-                    <dd><a href="javascript:;" path="login.html" tab-id="1-7"><i class="iconfont icon-denglu"></i> 登陆页面</a></dd>
-                    <dd><a href="javascript:;" path="404.html" tab-id="1-8"><i class="iconfont icon-404cuowu"></i> 404页面</a></dd>
-                    <dd><a href="javascript:;" path="403.html" tab-id="1-9"><i class="iconfont icon-icon-test"></i> 403页面</a></dd>
-                    <dd><a href="javascript:;" path="500.html" tab-id="1-10"><i class="iconfont icon-icon-test1"></i> 500页面</a></dd>
-                    <dd><a href="javascript:;" path="donate.html" tab-id="1-11"><i class="iconfont icon-juanzeng"></i> 捐赠列表</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <i class="layui-icon">&#xe62c;</i> 图表页面
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="javascript:;" path="map1.html" tab-id="2-1">柱状图</a></dd>
-                    <dd><a href="javascript:;" path="map2.html" tab-id="2-2">折线图</a></dd>
-                    <dd><a href="javascript:;" path="map3.html" tab-id="2-3">折线堆叠图</a></dd>
-                    <dd><a href="javascript:;" path="map4.html" tab-id="2-4">饼图</a></dd>
-                    <dd><a href="javascript:;" path="map5.html" tab-id="2-5">环形图</a></dd>
-                    <dd><a href="javascript:;" path="map6.html" tab-id="2-6">散布图</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <i class="layui-icon">&#xe646;</i> 字体图标
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="javascript:;" path="font-layui.html" tab-id="3-1">Layui内置图标库</a></dd>
-                    <dd><a href="javascript:;" path="font/demo_index.html" tab-id="3-2">阿里巴巴图标库</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <i class="layui-icon">&#xe716;</i> 系统管理
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="javascript:;" path="xxxx.html" tab-id="4-1"><i class="iconfont icon-settings"></i> 系统设置</a></dd>
-                    <dd><a href="javascript:;" path="xxxx.html" tab-id="4-2"><i class="iconfont icon-blacklist"></i> 屏蔽词</a></dd>
-                    <dd><a href="javascript:;" path="xxxx.html" tab-id="4-3"><i class="iconfont icon-rizhi"></i> 系统日志</a></dd>
+                    <dd v-for="(subMenu, sub_menu_idx) in menu.Sons">
+                        <a href="javascript:;" path="user.html" tab-id="1-1"><i class="iconfont icon-dianliyonghuzongshu"></i> [[subMenu.TitleCn]]</a>
+                    </dd>
                 </dl>
             </li>
         </ul>
@@ -56,83 +17,5 @@
 </div>
 
 <script>
-    new Vue({
-        el: '#sidebar',
-        data: {
-            menuList : '',
-            activeMenu: '1-2',
-            openMenu: "['1']"
-        },
-        created(){
-
-        },
-        methods: {
-            onSelectSubMenu(key) {
-                console.log(key);
-            },
-            loadMenu() {
-                let _this = this;
-                $c.ajax('[[urlfor "MenuController.UserMenuTree"]]',{}, function (ret) {
-                    if(ret.code === 0){
-                        _this.menuList = _this.initMenu(ret.data);
-                        console.log(_this.menuList);
-                    }else{
-                        $c.error(_this,ret.message);
-                    }
-                })
-            },
-            initMenu(data) {
-                let _this = this;
-                let menu = [];
-                $(data).filter(function (i, e) {
-                    //找出父节点
-                    let is_child =  e.Parent.Id === 0;
-                    if (is_child) {
-                        e.Sons = [];
-                        menu.push(e);
-                    }
-                    return is_child;
-                }).each(function (i, e) {
-                    //菜单
-                    if (e.Type === 1) {
-                        //递归加载子节点
-                        _this.addSonNode(e, data);
-                    } else if (e.Type === 0) {
-                        //如果是区域，先添加header
-                        //添加区域的子节点
-                        // $(data).filter(function (i1, e1) {
-                        //     return e1.Parent.Id === e.Id;
-                        // }).each(function (i2, e2) {
-                        //     //递归调用，显示子节点
-                        //
-                        // });
-                    }
-                });
-                return menu;
-            },
-            //cur 是实参
-            addSonNode(cur, list) {
-                let _this = this;
-                if (!$c.isEmpty(cur.SonNum) && cur.SonNum > 0) {
-                    $(list).filter(function (i, e) {
-                        let is_child =  e.Parent.Id === cur.Id;
-                        if (is_child) {
-                            e.Sons = [];
-                            cur.Sons.push(e);
-                        }
-                        return is_child;
-                    }).each(function (i, e) {
-                        //递归调用，显示子节点
-                        _this.addSonNode(e, list);
-                    });
-                } else {
-                    cur.Sons = [];
-                }
-            }
-        },
-        mounted: function () {
-            this.loadMenu();
-        }
-    });
 
 </script>
