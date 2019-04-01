@@ -5,11 +5,31 @@
 [[template "layout/admin/head.html" .]]
 </head>
 
-<body>
-<div id="app">
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
     [[ template "layout/admin/sidebar.html" ]]
-    [[.LayoutContent]]
+    [[template "layout/admin/header.html" .]]
+    <!-- 内容主体区域 -->
+    <div class="content-body">
+        <div class="layui-tab layui-tab-brief" lay-filter="ok-tab" lay-allowClose="true">
+            <ul class="layui-tab-title">
+                <li class="layui-this"><i class="layui-icon">&#xe68e;</i> 控制台</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    [[.LayoutContent]]
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--底部信息-->
+    <div class="layui-footer">
+        <button class="layui-btn layui-btn-danger layui-btn-xs donate">Skr</button>
+    </div>
 </div>
+<script src="/static/lib/nprogress/nprogress.js"></script>
+<script src="/static/js/okadmin.js"></script>
 </body>
 
 </html>
