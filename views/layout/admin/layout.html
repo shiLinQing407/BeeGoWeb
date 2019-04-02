@@ -11,9 +11,13 @@
     {{ template "layout/admin/header.html" .}}
     <!-- 内容主体区域 -->
     <div class="content-body">
-        <div class="layui-tab layui-tab-brief" lay-filter="ok-tab" lay-allowClose="true">
+        <div class="layui-tab layui-tab-brief" lay-filter="nav_tabs" lay-allowClose="true">
             <ul class="layui-tab-title">
-                <li class="layui-this" lay-id="111"><i class="layui-icon">&#xe68e;</i> 控制台</li>
+                <li class="layui-this" lay-id="c-c"><i class="layui-icon">&#xe68e;</i> 控制台</li>
+            </ul>
+            <ul class="rightmenu" style="position: absolute;display: none;font-size: 12px;font-family: 'Microsoft Yahei';">
+                <li data-type="closethis" class="text-center bg-tab">关闭当前</li>
+                <li data-type="closeall" class="text-center">关闭所有</li>
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
@@ -31,128 +35,120 @@
 <script src="/static/lib/nprogress/nprogress.js"></script>
 <script src="/static/js/okadmin.js"></script>
 <script>
-    new Vue({
-        el: '#sidebar',
-        data: {
-            menuList : ''
-        },
-        created(){
-        },
-        methods: {
-            loadMenu() {
-                let _this = this;
-                $c.ajax('{{urlfor "MenuController.UserMenuTree"}}',{}, function (ret) {
-                    if(ret.code === 0){
-                        _this.menuList = _this.initMenu(ret.data);
-                        console.log(_this.menuList);
-                    }else{
-                        $c.error(_this,ret.message);
-                    }
-                })
-            },
-            initMenu(data) {
-                let _this = this;
-                let menu = [];
-                $(data).filter(function (i, e) {
-                    //找出父节点
-                    let is_child =  e.Parent.Id === 0;
-                    if (is_child) {
-                        e.Sons = [];
-                        menu.push(e);
-                    }
-                    return is_child;
-                }).each(function (i, e) {
-                    //菜单
-                    if (e.Type === 1) {
-                        //递归加载子节点
-                        _this.addSonNode(e, data);
-                    } else if (e.Type === 0) {
-                        //如果是区域，先添加header
-                        //添加区域的子节点
-                        // $(data).filter(function (i1, e1) {
-                        //     return e1.Parent.Id === e.Id;
-                        // }).each(function (i2, e2) {
-                        //     //递归调用，显示子节点
-                        //
-                        // });
-                    }
-                });
-                return menu;
-            },
-            //cur 是实参
-            addSonNode(cur, list) {
-                let _this = this;
-                if (!$c.isEmpty(cur.SonNum) && cur.SonNum > 0) {
-                    $(list).filter(function (i, e) {
-                        let is_child =  e.Parent.Id === cur.Id;
-                        if (is_child) {
-                            e.Sons = [];
-                            cur.Sons.push(e);
-                        }
-                        return is_child;
-                    }).each(function (i, e) {
-                        //递归调用，显示子节点
-                        _this.addSonNode(e, list);
-                    });
-                } else {
-                    cur.Sons = [];
-                }
-            }
-        },
-        mounted: function () {
-            this.loadMenu();
-        }
-    });
-
-    // 跟表单元素一样，很多时候你的页面元素可能是动态生成的，
-    // 这时element的相关功能将不会对其有效，你必须手工执行 element.init(type, filter) 方法即可。
-    // 注意：2.1.6 开始，可以用 element.render(type, filter); 方法替代
-    // 第一个参数：type，为表单的type类型，可选。默认对全部类型的表单进行一次更新。可局部刷新的type如下表：  tab、nav、breadcrumb、progress、collapse
-    // 第二个参数：filter，为元素的 lay-filter="" 的值。你可以借助该参数，完成指定元素的局部更新。
-    // element.init(); //更新全部  2.1.6 可用 element.render() 方法替代
-    // element.render('nav'); //重新对导航进行渲染。注：layui 2.1.6 版本新增
-
-    //比如当你对导航动态插入了二级菜单，这时你需要重新去对它进行渲染
-    // element.render('nav', 'test1'); //对 lay-filter="test1" 所在导航重新渲染。注：layui 2.1.6 版本新增
-
     layui.use('element', function(){
         let element = layui.element;
+        //触发事件
+        let active = {
+            //在这里给active绑定几项事件，后面可通过active调用这些事件
+            tabAdd: function(url, lay_id, name) {
+                //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
+                element.tabAdd('nav_tabs', {
+                    title: name, //选项卡的标题
+                    content: '<iframe src="' + url + '" frameborder="0" scrolling="yes" width="100%" height="100%"></iframe>',  //选项卡的内容  支持传入html
+                    id: lay_id //选项卡标题的lay-id属性值'
+                });
+                CustomRightClick(lay_id); //给tab绑定右击事件
+                // FrameWH();  //计算ifram层的大小
+            },
+            tabChange: function(id) {
+                //切换到指定Tab项
+                element.tabChange('nav_tabs', id); //根据传入的id传入到指定的tab项
+            },
+            tabDelete: function (id) {
+                //删除单个tab
+                element.tabDelete("nav_tabs", id);
+            },
+            tabDeleteAll: function (ids) {
+                //控制台tab保留 删除其余所有tab
+                let index = $c.arraySeach("c-c", ids);
+                ids.splice(index,1);
+                $.each(ids, function (i,item) {
+                    element.tabDelete("nav_tabs", item); //ids是一个数组，里面存放了多个id，调用tabDelete方法分别删除
+                })
+            }
+        };
 
-        //监听选项卡切换
-        element.on('tab(ok-tab)', function(data){
-            console.log(this); //当前Tab标题所在的原始DOM元素
-            console.log(data.index); //得到当前Tab的所在下标
-            console.log(data.elem); //得到当前的Tab大容器
-
-            //监听Tab切换，以改变地址hash值
-            location.hash = 'ok-tab='+ this.getAttribute('lay-id');
+        //当点击有site-tab-active属性的标签时，即左侧菜单栏（可以是无限菜单栏）中内容 ，触发点击事件
+        $('.site-tab-active').on('click', function() {
+            let nav_active = $(this);
+            let lay_id = nav_active.attr("data-id");
+            let tab_title = nav_active.attr("data-title");
+            let url = nav_active.attr("data-url");
+            console.log("url");
+            console.log(url);
+            //这时会判断右侧.layui-tab-title属性下的有lay-id属性的li的数目，即已经打开的tab项数目
+            if ($(".layui-tab-title li[lay-id]").length <= 0) {
+                //如果比零小，则直接打开新的tab项
+                active.tabAdd(url, lay_id, tab_title);
+            } else {
+                //否则判断该tab项是否以及存在
+                //初始化一个标志，为false说明未打开该tab项 为true则说明已有
+                let addTab = true;
+                $.each($(".layui-tab-title li[lay-id]"), function () {
+                    //如果点击左侧菜单栏所传入的id 在右侧tab项中的lay-id属性可以找到，则说明该tab项已经打开
+                    if ($(this).attr("lay-id") == lay_id) {
+                        addTab = false;
+                    }
+                });
+                if (addTab) {
+                    //标志为false 新增一个tab项
+                    active.tabAdd(url,lay_id, tab_title);
+                }
+            }
+            //最后不管是否新增tab，最后都转到要打开的选项页面上
+            active.tabChange(lay_id);
         });
 
-        //监听选项卡删除
-        element.on('tabDelete(filter)', function(data){
-            console.log(this); //当前Tab标题所在的原始DOM元素
-            console.log(data.index); //得到当前Tab的所在下标
-            console.log(data.elem); //得到当前的Tab大容器
-        });
-
-        //监听导航菜单的点击   没有存在该菜单对应的选项卡则生成，
-        element.on('nav(sidebar-nav)', function(elem){
-            console.log("click sidebar-nav"); //得到当前点击的DOM对象
-            console.log(elem); //得到当前点击的DOM对象
-            //没有存在该菜单对应的选项卡则生成
-            element.tabAdd('ok-tab', {
-                title: '选项卡的标题'
-                ,content: '选项卡的内容' //支持传入html
-                ,id: '选项卡标题的lay-id属性值'
+        //为了效果更好一点，tab标签上增加了右键功能
+        function CustomRightClick(id) {
+            //取消右键
+            $('.layui-tab-title [lay-id="' + id + '"]').on('contextmenu', function () { return false; });
+            $('.layui-tab-title,.layui-tab-title li').click(function () {
+                $('.rightmenu').hide();
             });
+            //桌面点击右击
+            $('.layui-tab-title [lay-id="' + id + '"]').on('contextmenu', function (e) {
+                var popupmenu = $(".rightmenu");
+                popupmenu.find("li").attr("data-id",id);
+                l = $(this)[0].offsetLeft;
+                w = $(this)[0].offsetWidth + 'px';
+                h = $(this)[0].offsetHeight + 'px';
+                console.log(h);
+                popupmenu.css({ left: l, width: w}).show();
+                popupmenu.find("li").css({'line-height': h});
+                t = popupmenu.offsetHeight;
+                popupmenu.css({ top: t});
+                //alert("右键菜单")
+                return false;
+            });
+        }
 
-            // 已有则切换至该选项卡
-            // 用于外部切换到指定的Tab项上，参数同上，如： element.tabChange('demo', 'layid'); //切换到 lay-id="yyy" 的这一项
-            //获取hash来切换选项卡，假设当前地址的hash为lay-id对应的值
-            let layid = location.hash.replace(/^#ok-tab=/, '');
-            element.tabChange('ok-tab', layid); //假设当前地址为：http://a.com#test1=222，那么选项卡会自动切换到“发送消息”这一项
-
+        //右键菜单有了，就需要给右键添加功能
+        $(".rightmenu li").click(function () {
+            if ($(this).attr("data-type") == "closethis") {
+                let lay_id = $(this).attr("data-id");
+                console.log(lay_id);
+                active.tabDelete(lay_id);
+            } else if ($(this).attr("data-type") == "closeall") {
+                var tabtitle = $(".layui-tab-title li");
+                var ids = new Array();
+                $.each(tabtitle, function (i) {
+                    ids[i] = $(this).attr("lay-id");
+                });
+                active.tabDeleteAll(ids);
+            }
+            $('.rightmenu').hide();
         });
+
+        // //完成后，我们还需要计算iframe的高度，因为自动高度，会导致iframe挤到一起
+        // function FrameWH() {
+        //     var h = $(window).height() -41- 10 - 60 -10-44 -10;
+        //     $("iframe").css("height",h+"px");
+        // }
+        //
+        // $(window).resize(function () {
+        //     FrameWH();
+        // })
     });
 </script>
 </body>

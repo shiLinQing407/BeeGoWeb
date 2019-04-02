@@ -7,7 +7,7 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd v-for="(subMenu, sub_menu_idx) in menu.Sons">
-                        <a href="javascript:;" :path="subMenu.LinkUrl" tab-id="1-1"><i class="iconfont icon-dianliyonghuzongshu"></i> [[subMenu.TitleCn]]</a>
+                        <a class="site-tab-active" href="javascript:;" :data-url="subMenu.LinkUrl" :data-id="menu_idx + '-' + sub_menu_idx" :data-title="subMenu.TitleCn"><i class="iconfont icon-dianliyonghuzongshu"></i> [[subMenu.TitleCn]]</a>
                     </dd>
                 </dl>
             </li>
@@ -17,4 +17,76 @@
 
 <script>
 
+    new Vue({
+        el: '#sidebar',
+        data: {
+            menuList : ''
+        },
+        created(){
+        },
+        methods: {
+            loadMenu() {
+                let _this = this;
+                $c.ajax('{{urlfor "MenuController.UserMenuTree"}}',{}, function (ret) {
+                    if(ret.code === 0){
+                        _this.menuList = _this.initMenu(ret.data);
+                        console.log(_this.menuList);
+                    }else{
+                        $c.error(_this,ret.message);
+                    }
+                })
+            },
+            initMenu(data) {
+                let _this = this;
+                let menu = [];
+                $(data).filter(function (i, e) {
+                    //找出父节点
+                    let is_child =  e.Parent.Id === 0;
+                    if (is_child) {
+                        e.Sons = [];
+                        menu.push(e);
+                    }
+                    return is_child;
+                }).each(function (i, e) {
+                    //菜单
+                    if (e.Type === 1) {
+                        //递归加载子节点
+                        _this.addSonNode(e, data);
+                    } else if (e.Type === 0) {
+                        //如果是区域，先添加header
+                        //添加区域的子节点
+                        // $(data).filter(function (i1, e1) {
+                        //     return e1.Parent.Id === e.Id;
+                        // }).each(function (i2, e2) {
+                        //     //递归调用，显示子节点
+                        //
+                        // });
+                    }
+                });
+                return menu;
+            },
+            //cur 是实参
+            addSonNode(cur, list) {
+                let _this = this;
+                if (!$c.isEmpty(cur.SonNum) && cur.SonNum > 0) {
+                    $(list).filter(function (i, e) {
+                        let is_child =  e.Parent.Id === cur.Id;
+                        if (is_child) {
+                            e.Sons = [];
+                            cur.Sons.push(e);
+                        }
+                        return is_child;
+                    }).each(function (i, e) {
+                        //递归调用，显示子节点
+                        _this.addSonNode(e, list);
+                    });
+                } else {
+                    cur.Sons = [];
+                }
+            }
+        },
+        mounted: function () {
+            this.loadMenu();
+        }
+    });
 </script>
