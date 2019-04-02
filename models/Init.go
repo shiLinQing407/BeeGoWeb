@@ -7,6 +7,7 @@ package models
 
 import (
 	"BeeGoWeb/models/log"
+	"BeeGoWeb/models/news"
 	"BeeGoWeb/models/system"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
@@ -42,7 +43,7 @@ func Init() {
 	//new用来分配内存，但与其他语言中的同名函数不同，它不会初始化内存，只会讲内存置零；
 	// 也就是说，new(T)会为类型为T的新项分配已置零的内存空间，并返回他的地址，也就是一个类型为*T的值。
 	// 用Go的术语来说，它返回一个指针，改指针指向新分配的，类型为T的零值
-	orm.RegisterModelWithPrefix("go_", new(system.User), new(log.Log), new(system.Menu), new(system.Role), new(system.RoleMenuRel),new(system.RoleUserRel))
+	orm.RegisterModelWithPrefix("go_", new(news.News), new(news.Class), new(system.User), new(log.Log), new(system.Menu), new(system.Role), new(system.RoleMenuRel),new(system.RoleUserRel))
 	if beego.AppConfig.String("runmode") == "dev" {
 		orm.Debug = true
 	}
