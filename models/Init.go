@@ -38,6 +38,7 @@ func Init() {
 	//fmt.Println(dsn)
 	//orm.RegisterDataBase("default", "mysql", dsn)
 	orm.RegisterDataBase("default", "mysql", "root:root@tcp(127.0.0.1:3306)/go_web?charset=utf8")
+	//orm.RegisterDataBase("default", "mysql", "root:123456@tcp(127.0.0.1:3306)/go_web?charset=utf8")
 	//new用来分配内存，但与其他语言中的同名函数不同，它不会初始化内存，只会讲内存置零；
 	// 也就是说，new(T)会为类型为T的新项分配已置零的内存空间，并返回他的地址，也就是一个类型为*T的值。
 	// 用Go的术语来说，它返回一个指针，改指针指向新分配的，类型为T的零值
