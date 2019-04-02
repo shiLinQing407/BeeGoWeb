@@ -22,6 +22,9 @@ func init() {
 	//beego.Router("/logout", &web.LoginController{}, "*:Logout")
 	/******************************		后台路由	******************************/
 	beego.Router("/admin/index", &admin.AdminController{}, "*:Index")
+	beego.Router("/admin/news", &admin.NewsController{}, "*:Index")
+	beego.Router("/admin/news/loadList", &admin.NewsController{}, "GET:LoadList")
+	beego.Router("/admin/news/class", &admin.NewsClassController{},"GET:Index")
 	//beego.Router("/admin/login", &admin.LoginController{}, "*:Login")
 	//beego.Router("/admin/logout", &admin.LoginController{}, "*:Logout")
 	//beego.Router("/admin/config", &admin.ConfigController{}, "*:Config") //设置网站配置
