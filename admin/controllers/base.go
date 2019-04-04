@@ -183,8 +183,8 @@ func (this *BaseController) jsonResult(code interface{}, msg string, obj interfa
 }
 
 // 输出table json
-func (this *BaseController) tableJsonResult(code interface{}, msg string, obj interface{}, total int64) {
-	r := &common.TableJsonResult{common.JsonResult{code, msg, obj}, total}
+func (this *BaseController) toDataGrid( obj interface{}, total int64) {
+	r := &common.ToDataGrid{obj, total}
 	this.Data["json"] = r
 	this.ServeJSON()
 	this.StopRun()

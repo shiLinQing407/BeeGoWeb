@@ -20,5 +20,5 @@ func (this *NewsController) Index(){
 
 func(this *NewsController) LoadList(){
 	data, count := news.NewsListGrid(this.page, this.pageSize)
-	this.tableJsonResult(0, "", data, count)
+	this.toDataGrid(data, count)
 }

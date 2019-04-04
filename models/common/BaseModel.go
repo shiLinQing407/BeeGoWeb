@@ -14,9 +14,9 @@ type JsonResult struct {
 	Data  	interface{} 	`json:"data"`
 }
 
-type TableJsonResult struct {
-	JsonResult
-	Count	int64	`json:"count"`
+type ToDataGrid struct {
+	Rows	interface{} `json:"rows"`
+	Total	int64		`json:"total"`
 }
 
 // BaseQueryParam Base查询结构

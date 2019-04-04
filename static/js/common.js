@@ -112,18 +112,141 @@ $c.addZero = function(time) {
     return i;
 }
 
-$c.error = function (vue, msg, duration = 2, onClose = '') {
-    vue.$Message.error(msg, duration, onClose);
+$c.getGridHeight = function() {
+    var win_height = $(window).height();
+    main_header_height = $("#js_main_header").outerHeight(true);
+    if (!main_header_height)
+        main_header_height = 0;
+    var height = win_height - main_header_height - 10;
+    return height;
 }
 
-$c.success = function (vue, msg, duration = 2, onClose = '') {
-    vue.$Message.success(msg, duration, onClose);
+$c.parseToDate = function(value) {
+    if (value == null || value == '') {
+        return undefined;
+    }
+    var dt;
+    if (value instanceof Date) {
+        dt = value;
+    } else {
+        if (!isNaN(value)) {
+            dt = new Date(parseInt(value) * 1000);
+            //dt = new Date(value);
+        } else if (value.indexOf('/Date') > -1) {
+            value = value.replace(/\/Date(−?\d+)\//, '$1');
+            dt = new Date();
+            dt.setTime(value);
+        } else if (value.indexOf('/') > -1) {
+            dt = new Date(Date.parse(value.replace(/-/g, '/')));
+        } else {
+            dt = new Date(value);
+        }
+    }
+    return dt;
 }
 
-$c.warning = function (vue, msg, duration = 2, onClose = '') {
-    vue.$Message.warning(msg, duration, onClose);
+$c.formatDate = function(value) {
+    if (value == null || value == '') {
+        return '';
+    }
+    var dt = $c.parseToDate(value);//关键代码，将那个长字符串的日期值转换成正常的JS日期格式
+    return dt.format("yyyy-MM-dd"); //这里用到一个javascript的Date类型的拓展方法，这个是自己添加的拓展方法，在后面的步骤3定义
 }
 
-$c.loading = function (vue, duration = 0) {
-    vue.$Message.loading('正在加载中...', duration);
+$c.formatDateTime = function(value){
+    if (value == null || value == '') {
+        return '';
+    }
+    var dt = $c.parseToDate(value);
+    return dt.format("yyyy-MM-dd hh:mm:ss");
+}
+
+/**
+ * layer弹出层
+ * @param title 标题
+ * @param width_par 宽度%
+ * @param height_par 高度%
+ * @param url 请求地址
+ * @param callback 回调
+ * @param btn 按钮设置 默认:['保存', '保存并关闭', '取消']
+ */
+$c.openBarWin = function(title, width_par, height_par, url, callback, btn) {
+    if (typeof (btn) == 'undefined') {
+        btn = ['保存', '保存并关闭', '取消'];
+        flag = false;
+    }
+    var flag = true;
+    if (btn.length > 2)
+        flag = false;
+    title = '<i class="icon wb-order"></i>' + title;
+    layer.open({
+        type: 2,
+        title: title,
+        btn: btn,
+        shade: false,
+        maxmin: true,
+        shade: 0.5,
+        anim: 4,
+        area: [width_par + '%', height_par + '%'],
+        maxmin: false,
+        //skin: 'layui-layer-rim', //加上边框
+        content: url,
+        btn2: function (index) {
+            if (flag) {
+                this.close(index);//编辑时 该按钮是取消的功能
+                return;
+            }
+            var iframe = window.frames["layui-layer-iframe" + index];
+            if (!iframe)
+                iframe = window.parent.frames["layui-layer-iframe" + index];
+            if (typeof (iframe.saveData) != "undefined") {
+                iframe.saveData.call(this, callback, index, true);
+            } else if (typeof (callback) != "undefined") {
+                callback(index);
+                this.close(index); //一般设定yes回调，必须进行手工关闭
+            } else {
+                this.close(index); //一般设定yes回调，必须进行手工关闭
+            }
+            return false;
+        },
+        yes: function (index, layero) {
+            var iframe = window.frames["layui-layer-iframe" + index];
+            if (!iframe)
+                iframe = window.parent.frames["layui-layer-iframe" + index];
+            if (typeof (iframe.saveData) != "undefined") {
+                iframe.saveData.call(this, callback, index, flag);
+            } else if (typeof (callback) != "undefined" && callback != "") {
+                callback(index);
+                this.close(index); //一般设定yes回调，必须进行手工关闭
+            } else {
+                this.close(index); //一般设定yes回调，必须进行手工关闭
+            }
+        }
+    });
+}
+
+
+$c.alert = function(msg, callback) {
+    layer.alert(msg, {icon: 6}, function (index) {
+        this.close(index);
+        if (typeof (callback) != "undefined")
+            callback();
+    });
+}
+
+$c.showLoading = function(msg) {
+    if (msg == null || msg == "")
+        msg = "加载中...";
+    layer.msg(msg, {icon: 16, time: 0, shade: 0.01});
+}
+
+$c.hideLoading = function() {
+    $(".layui-layer-shade").hide();
+    $(".layui-layer").hide();
+}
+
+$c.msg = function(text, time) {
+    if (time == null)
+        time = 1000;
+    layer.msg(text, {time: time});
 }
