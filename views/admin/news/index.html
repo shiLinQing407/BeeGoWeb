@@ -36,12 +36,18 @@
 <!--js逻辑-->
 <script>
     // layui相关
-    layui.use(['element', 'table', 'form', 'jquery', 'laydate'], function () {
+    layui.use(['element', 'table', 'form', 'jquery', 'laydate', 'laytpl'], function () {
         var element = layui.element;
         var table = layui.table;
         var form = layui.form;
         var $ = layui.jquery;
         var laydate = layui.laydate;
+        var laytpl = layui.laytpl;
+
+        laytpl.config({
+            open: '<%',
+            close: '%>'
+        });
 
         laydate.render({
             elem: '#startTime',
@@ -69,11 +75,10 @@
                 // {field: 'publisher', title: '发布者', width: 100},
                 // {field: 'isTop', title: '置顶', width: 100, templet: '#topTpl'},
                 // {field: 'status', title: '状态', width: 100, templet: '#statusTpl'},
-                {field: 'create_time', title: '创建时间', width: 100},
+                {field: 'create_time', title: '创建时间', width: 100, templet:""},
                 {title: '操作', width: 200, templet: '#operationTpl', align: 'center'}
             ]],
             done: function (res, curr, count) {
-                console.log(res, curr, count)
                 $("#countNum").text(count);
             }
         });
@@ -127,6 +132,9 @@
     })
 </script>
 <!--模板-->
+<script type="text/html" id="timeTpl">
+    <div><% layui.util.toDateString(d.create_time, 'yyyy-MM-dd HH:mm:ss') %></div>
+</script>
 
 <script type="text/html" id="operationTpl">
     <a href="javascript:;" title="编辑" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
