@@ -7,6 +7,7 @@ package news
 
 import (
 	"BeeGoWeb/models/common"
+	"fmt"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -58,14 +59,15 @@ func (c *News) Delete() error {
 	return nil
 }
 
-func GetList(page, pageSize int, filters ...interface{}) ([]*News, int64){
+func GetList(page, pageSize int, filters map[string]interface{}) ([]*News, int64){
 	offset := (page - 1) * pageSize
 	news := make([]*News, 0)
 	query := orm.NewOrm().QueryTable(newsTable)
 	if len(filters) > 0 {
-		l := len(filters)
-		for i := 0; i < l; i += 2 {
-			query = query.Filter(filters[i].(string), filters[i+1])
+		for key, value := range filters{
+			fmt.Println(key)
+			fmt.Println(value)
+			query = query.Filter(key, value)
 		}
 	}
 	total, _ := query.Count() //数据总数
@@ -73,8 +75,8 @@ func GetList(page, pageSize int, filters ...interface{}) ([]*News, int64){
 	return news, total
 }
 
-func NewsListGrid(page, pageSize int, filters ...interface{}) ([]News, int64) {
-	data, total := GetList(page, pageSize)
+func NewsListGrid(page, pageSize int, filters map[string]interface{}) ([]News, int64) {
+	data, total := GetList(page, pageSize, filters)
 	list := make([]News, len(data))
 	for i, item := range data {
 		list[i] = *item

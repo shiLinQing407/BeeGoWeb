@@ -76,8 +76,8 @@ func format(layout string) string {
 }
 
 /**
- * t 要格式化的时间
  * layout 要格式化的时间格式
+ * t 要格式化的时间
  */
 func Date(layout string, t time.Time) string {
 	f := format(layout)

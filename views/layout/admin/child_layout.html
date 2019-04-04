@@ -12,8 +12,25 @@
 
 <script src="/static/lib/nprogress/nprogress.js"></script>
 <script src="/static/js/okadmin.js"></script>
+<script type="text/javascript" src="/static/lib/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/static/lib/easyui/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="/static/lib/easyui/themes/custom/easyui.css">
+<link rel="stylesheet" href="/static/lib/web-icons/index.css">
 <script>
-
+    $(window).resize(function () {
+        resizeGridHeight(null);
+        if (typeof resize != 'undefined')
+            resize();
+    });
+    function resizeGridHeight(height) {
+        if ($('#grid-table').length > 0) {
+            if (!height)
+                height = $c.getGridHeight();
+            $('#grid-table').datagrid('resize', {
+                height: height
+            });
+        }
+    }
 </script>
 </body>
 

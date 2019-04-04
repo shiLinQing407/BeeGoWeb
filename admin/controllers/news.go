@@ -19,6 +19,14 @@ func (this *NewsController) Index(){
 }
 
 func(this *NewsController) LoadList(){
-	data, count := news.NewsListGrid(this.page, this.pageSize)
+	keyword := this.GetStrings("js_keyword")
+	//startTime := this.GetStrings("startTime")
+	//endTime := this.GetStrings("endTime")
+	filter := make(map[string]interface{})
+	if keyword != nil{
+		filter["title__icontains"] = keyword[0] //模糊查询 title
+	}
+
+	data, count := news.NewsListGrid(this.page, this.pageSize, filter)
 	this.toDataGrid(data, count)
 }
