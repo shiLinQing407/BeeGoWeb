@@ -4,6 +4,7 @@ import (
 	"time"
 	"fmt"
 	"strings"
+	"github.com/astaxie/beego"
 )
 
 const (
@@ -94,9 +95,24 @@ func GetTime() string {
 	return str
 }
 
-/************/
+/****** 将时间字符串转换成时间戳******/
 func TimeParse(t string) int64 {
-	p, _ := time.Parse("2006-01-02 15:04:05", t)
+	p, err := time.Parse("2006-01-02 15:04:05", t)
+	if err != nil {
+		beego.Error(err)
+	}
+	return p.Unix()
+}
+/****** 将时间字符串转换成当前时区时间的时间戳******/
+func TimeParseInLocation(t string) int64 {
+	loc, err := time.LoadLocation("Local")
+	if err != nil {
+		beego.Error(err)
+	}
+	p, err := time.ParseInLocation("2006-01-02 15:04:05", t, loc)
+	if err != nil {
+		beego.Error(err)
+	}
 	return p.Unix()
 }
 

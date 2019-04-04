@@ -7,6 +7,8 @@ package controllers
 
 import (
 	"BeeGoWeb/models/news"
+	"github.com/astaxie/beego"
+	"BeeGoWeb/utils"
 )
 
 type NewsController struct {
@@ -20,13 +22,18 @@ func (this *NewsController) Index(){
 
 func(this *NewsController) LoadList(){
 	keyword := this.GetStrings("js_keyword")
-	//startTime := this.GetStrings("startTime")
-	//endTime := this.GetStrings("endTime")
+	startTime := this.GetString("startTime", "")
+	endTime := this.GetString("endTime", "")
 	filter := make(map[string]interface{})
 	if keyword != nil{
 		filter["title__icontains"] = keyword[0] //模糊查询 title
 	}
-
+	if startTime != "" {
+		filter["create_time__gt"] = utils.TimeParseInLocation(startTime)
+	}
+	if endTime != "" {
+		filter["create_time__lt"] = utils.TimeParseInLocation(endTime)
+	}
 	data, count := news.NewsListGrid(this.page, this.pageSize, filter)
 	this.toDataGrid(data, count)
 }
