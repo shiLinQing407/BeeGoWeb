@@ -24,14 +24,15 @@ type BaseController struct {
 }
 
 type AjaxJson struct {
-	status bool
-	data   map[string]string
+	status 	bool
+	data	interface{}
 }
+
 
 //这个函数主要是为了用户扩展用的，这个函数会在Get、Post、Delete、Put、Finish等这些 Method 方法之前执行，用户可以重写这个函数实现类似用户验证之类。
 func (this *BaseController) Prepare() {
-	this.page = 0    //列表页 初始分页
-	this.pageSize = 20 //列表页 分页记录条数
+	this.page, _ = this.GetInt("page")
+	this.pageSize, _ = this.GetInt("limit")
 	controllerName, actionName := this.GetControllerAndAction()
 	this.controllerName = strings.ToLower(controllerName[0 : len(controllerName)-10])
 	this.actionName = strings.ToLower(actionName)
@@ -176,6 +177,14 @@ func (this *BaseController) showMsg(args ...string) {
 // 输出json
 func (this *BaseController) jsonResult(code interface{}, msg string, obj interface{}) {
 	r := &common.JsonResult{code, msg, obj}
+	this.Data["json"] = r
+	this.ServeJSON()
+	this.StopRun()
+}
+
+// 输出table json
+func (this *BaseController) tableJsonResult(code interface{}, msg string, obj interface{}, total int64) {
+	r := &common.TableJsonResult{common.JsonResult{code, msg, obj}, total}
 	this.Data["json"] = r
 	this.ServeJSON()
 	this.StopRun()

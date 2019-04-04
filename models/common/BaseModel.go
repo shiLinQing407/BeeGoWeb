@@ -9,9 +9,14 @@ import "github.com/astaxie/beego"
 
 // JsonResult 用于返回ajax请求的基类
 type JsonResult struct {
-	Code interface{} `json:"code"`
-	Message  string      `json:"message"`
-	Data  interface{} `json:"data"`
+	Code 	interface{} 	`json:"code"`
+	Message string     		`json:"message"`
+	Data  	interface{} 	`json:"data"`
+}
+
+type TableJsonResult struct {
+	JsonResult
+	Count	int64	`json:"count"`
 }
 
 // BaseQueryParam Base查询结构

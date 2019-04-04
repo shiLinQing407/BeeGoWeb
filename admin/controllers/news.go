@@ -5,7 +5,9 @@
 */
 package controllers
 
-import "BeeGoWeb/models/news"
+import (
+	"BeeGoWeb/models/news"
+)
 
 type NewsController struct {
 	BaseController
@@ -17,8 +19,6 @@ func (this *NewsController) Index(){
 }
 
 func(this *NewsController) LoadList(){
-	this.page, _ = this.GetInt("page")
-	this.pageSize, _ = this.GetInt("limit")
-	list := news.NewsListGrid(this.page, this.pageSize)
-	this.jsonResult(0, "", list)
+	data, count := news.NewsListGrid(this.page, this.pageSize)
+	this.tableJsonResult(0, "", data, count)
 }

@@ -68,18 +68,18 @@ func GetList(page, pageSize int, filters ...interface{}) ([]*News, int64){
 			query = query.Filter(filters[i].(string), filters[i+1])
 		}
 	}
-	total, _ := query.Count()
+	total, _ := query.Count() //数据总数
 	query.OrderBy("-id").Limit(pageSize, offset).All(&news)
 	return news, total
 }
 
-func NewsListGrid(page, pageSize int, filters ...interface{}) []News {
+func NewsListGrid(page, pageSize int, filters ...interface{}) ([]News, int64) {
 	data, total := GetList(page, pageSize)
-	list := make([]News, total)
+	list := make([]News, len(data))
 	for i, item := range data {
 		list[i] = *item
 	}
-	return list
+	return list, total
 }
 
 func (c *News) FindById(id int) (*News, error) {
