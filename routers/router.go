@@ -24,7 +24,11 @@ func init() {
 	beego.Router("/admin/index", &admin.AdminController{}, "*:Index")
 	beego.Router("/admin/news", &admin.NewsController{}, "*:Index")
 	beego.Router("/admin/news/loadList", &admin.NewsController{}, "GET:LoadList")
+	beego.Router("/admin/news/edit", &admin.NewsController{}, "*:Edit")
+	beego.Router("/admin/news/loadData", &admin.NewsController{}, "GET:LoadData")
+
 	beego.Router("/admin/news/class", &admin.NewsClassController{},"GET:Index")
+	beego.Router("/admin/news_class/loadList", &admin.NewsClassController{}, "GET:LoadList")
 	//beego.Router("/admin/login", &admin.LoginController{}, "*:Login")
 	//beego.Router("/admin/logout", &admin.LoginController{}, "*:Logout")
 	//beego.Router("/admin/config", &admin.ConfigController{}, "*:Config") //设置网站配置

@@ -31,6 +31,33 @@
             });
         }
     }
+
+    function getUrl(action_name,param,controller_name = ""){
+        if(controller_name == ""){
+            controller_name = "{{.curController}}"
+        }
+        var url = controller_name + "/" + action_name
+        if (param != null && param != "") {
+            var ref = "";
+            if (typeof param === 'string') {
+                ref = param;
+            } else if (typeof param === 'object') {
+                for (var key in param) {
+                    if (ref != "")
+                        ref += "&";
+                    ref += key + "=" + param[key];
+                }
+            }
+            if (ref != "") {
+                if (url.indexOf("?") == -1)
+                    url += "?";
+                else
+                    url += "&";
+                url += ref;
+            }
+        }
+        return url;
+    }
 </script>
 </body>
 
