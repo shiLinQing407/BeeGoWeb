@@ -51,6 +51,7 @@ func(this *NewsController) Edit(){
 			this.ReturnFailedJson(err, "获取数据失败")
 		}
 		fmt.Println(news)
+		news.CreateTime = time.Now().Unix()
 		if news.Id == 0{
 			news.CreateTime = time.Now().Unix()
 			if _, err := model.Insert(&news); err != nil {
