@@ -5,7 +5,7 @@
             <form class="layui-form layui-col-md12 ok-search">
                 <input class="layui-input" placeholder="开始日期" autocomplete="off" name="startTime" id="startTime">
                 <input class="layui-input" placeholder="截止日期" autocomplete="off" name="endTime" id="endTime">
-                <input class="layui-input" placeholder="请输入标题" autocomplete="off" name="js_keyword">
+                <input class="layui-input" placeholder="请输入标题" autocomplete="off" name="js_keyword" id="js_keyword">
                 <button class="layui-btn" lay-submit="" lay-filter="search">
                     <i class="layui-icon layui-icon-search"></i>
                 </button>
@@ -118,5 +118,15 @@
         });
 
     })
+
+    function reload(data){
+        if(!data){
+            var js_keyword = $("#js_keyword").val();
+            var startTime = $("#startTime").val();
+            var endTime = $("#endTime").val();
+            data = {"js_keyword":js_keyword,"startTime":startTime,"endTime":endTime}
+        }
+        $('#grid-table').datagrid('reload', data);
+    }
 
 </script>

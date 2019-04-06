@@ -223,7 +223,9 @@ $c.openBarWin = function(title, width_par, height_par, url, callback) {
         //     }
         // },
         end: function () {
-            $(".layui-laypage-btn")[0].click();
+            if (typeof (callback) != "undefined" && callback != "") {
+                callback();
+            }
         }
     });
 }
@@ -257,13 +259,14 @@ $c.hideLoading = function() {
     swal.close();
 };
 
-$c.successMsg = function(msg, time=2000) {
+$c.successMsg = function(msg, callback, time=2000) {
     swal({
         title: msg,
         type: "success",
         timer: time,
         showConfirmButton: false
-    });
+    })
+
 };
 $c.errorMsg = function(msg, time=2000) {
     swal({
@@ -273,3 +276,7 @@ $c.errorMsg = function(msg, time=2000) {
         showConfirmButton: false
     });
 };
+
+$c.layerMsg = function(msg, callback){
+    layer.msg(msg, {icon: 6, time: 1000, anim: 4}, callback);
+}

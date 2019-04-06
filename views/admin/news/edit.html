@@ -3,7 +3,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">标题</label>
         <div class="layui-input-block">
-            <input type="text" v-model="data.title" name="Title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            <input type="text" v-model="data.title" name="Title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
     </div>
 
@@ -25,7 +25,7 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">内容</label>
         <div class="layui-input-block">
-            <textarea v-model="data.content" name="Content" id="content" placeholder="请输入文章内容" class="layui-textarea" lay-verify="required"></textarea>
+            <textarea v-model="data.content" name="Content" id="content" placeholder="请输入文章内容" class="layui-textarea"></textarea>
         </div>
     </div>
 
@@ -60,15 +60,15 @@
                 return false;
             }
             data.field.Content = content
-            var ret = app.save(data.field) //调用vue方法
-            // return false;
+            app.save(data.field) //调用vue方法
+            return false;
         });
     });
     var app = new Vue({
         el: '#form-app',
         data: {
             id: '',
-            data : '',
+            data : {},
             class_list:'',
             selected_class_id: 0,
         },
@@ -114,8 +114,10 @@
                 $c.ajax(getUrl("edit"),params, function(ret){
                     $c.hideLoading();
                     if(ret.code === 0){
-                        $c.successMsg("编辑成功！");
-                        parent.layer.close(parent.layer.getFrameIndex(window.name));
+                        $c.layerMsg("提交成功！",function(){
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));
+                        });
+
                     }else{
                         $c.errorMsg(ret.message)
                     }
