@@ -1,6 +1,6 @@
 <form class="layui-form layui-form-pane ok-form" id="form-app">
     <div class="layui-form-item">
-        <label class="layui-form-label" @click="show()">标题</label>
+        <label class="layui-form-label">标题</label>
         <div class="layui-input-block">
             <input type="text" v-model="data.title" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
@@ -28,8 +28,16 @@
         </div>
     </div>
 
+    <div class="layui-form-item">
+        <div class="layui-input-block div-submit">
+            <button class="layui-btn" lay-submit @click="save()">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+
 </form>
 <script>
+
     layui.use(['element', 'form', 'jquery', 'laydate','layedit'], function () {
         var element = layui.element;
         var form = layui.form;
@@ -44,8 +52,6 @@
             }
         });
         layedit.build("content")
-
-
     })
     new Vue({
         el: '#form-app',
@@ -55,7 +61,7 @@
             class_list:'',
             selected_class_id: 0,
         },
-        created(){
+        async created(){
             this.id = {{.id}};
             if(this.id != "" && parseInt(this.id) > 0 && "{{.loadDataAction}}"){
                 this.loadData();
@@ -67,7 +73,6 @@
                 var params = {
                     "id" : {{.id}}
                 };
-                 console.log(layui.layer)
                 $.getJSON("{{.loadDataAction}}",params, function (ret) {
                     if(ret.code === 0){
                         _this.data = ret.data
@@ -93,9 +98,13 @@
                     }
                 })
             },
-            show(){
-                console.log(layui.layer)
-            }
+            save(){
+
+                // layer.msg("编辑成功！", {icon: 6, time: 1000, anim: 4}, function () {
+                //     parent.layer.close(parent.layer.getFrameIndex(window.name));
+                // });
+            },
+
         },
         mounted: function () {
             this.loadClass();
