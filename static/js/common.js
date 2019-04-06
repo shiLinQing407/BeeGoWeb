@@ -242,9 +242,9 @@ $c.alert = function (msg) {
      });
 };
 
-$c.showLoading = function(msg) {
+$c.showLoading = function(title = "Loading...") {
     swal({
-        title: "Loading...",
+        title: title,
         type: "",
         imageUrl: '/static/imgs/loading.gif',
         allowEscapeKey: false,
@@ -257,7 +257,7 @@ $c.hideLoading = function() {
     swal.close();
 };
 
-$c.successMsg = function(msg, time=3000) {
+$c.successMsg = function(msg, time=2000) {
     swal({
         title: msg,
         type: "success",
@@ -265,7 +265,7 @@ $c.successMsg = function(msg, time=3000) {
         showConfirmButton: false
     });
 };
-$c.errorMsg = function(msg, time=3000) {
+$c.errorMsg = function(msg, time=2000) {
     swal({
         title: msg,
         type: "error",

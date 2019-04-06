@@ -1,4 +1,5 @@
 <form class="layui-form layui-form-pane ok-form" id="form-app">
+    <input type="hidden" name="id" v-model="data.id" />
     <div class="layui-form-item">
         <label class="layui-form-label">标题</label>
         <div class="layui-input-block">
@@ -9,7 +10,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">分类</label>
         <div class="layui-input-block">
-            <select name="class_id" v-model="selected_class_id">
+            <select name="class_id" v-model="selected_class_id" lay-verify="required">
                 <option :selected="class_data.id == data.class_id.id ? 'true' : 'false'" :value="class_data.id" v-for="class_data in class_list">[[class_data.class_name_zh]]</option>
             </select>
         </div>
@@ -30,7 +31,7 @@
 
     <div class="layui-form-item">
         <div class="layui-input-block div-submit">
-            <button class="layui-btn" lay-submit @click="save()">立即提交</button>
+            <button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -51,9 +52,19 @@
                 ,type: '' //默认post
             }
         });
-        layedit.build("content")
+        var index = layedit.build("content")
+        form.on('submit(submit)', function (data) {
+            var content = layedit.getContent(index) // 富文本内容
+            if(content == ""){
+                $c.errorMsg("文章内容不能为空")
+                return false;
+            }
+            data.field.content = content
+            var ret = app.save(data.field) //调用vue方法
+            // return false;
+        });
     });
-    new Vue({
+    var app = new Vue({
         el: '#form-app',
         data: {
             id: '',
@@ -61,7 +72,7 @@
             class_list:'',
             selected_class_id: 0,
         },
-        async created(){
+        created(){
             this.id = {{.id}};
             if(this.id != "" && parseInt(this.id) > 0 && "{{.loadDataAction}}"){
                 this.loadData();
@@ -98,11 +109,19 @@
                     }
                 })
             },
-            save(){
+            //保存
+            save(params){
+                $c.showLoading("提交数据中...");
+                $c.ajax(getUrl("edit"),params, function(ret){
+                    $c.hideLoading();
+                    if(ret.code === 0){
+                        $c.successMsg("编辑成功！");
+                        parent.layer.close(parent.layer.getFrameIndex(window.name));
+                    }else{
+                        $c.errorMsg(ret.message)
+                    }
+                })
 
-                // layer.msg("编辑成功！", {icon: 6, time: 1000, anim: 4}, function () {
-                //     parent.layer.close(parent.layer.getFrameIndex(window.name));
-                // });
             },
 
         },
