@@ -231,31 +231,44 @@ $c.openBarWin = function(title, width_par, height_par, url, callback) {
 /**
  * todo vue.js 的created 和 mounted 中layer还未创建
  */
-$c.alert = function(msg, callback) {
-    layer.alert(msg, {icon: 6}, function (index) {
-        this.close(index);
-        if (typeof (callback) != "undefined")
-            callback();
-    });
-}
+$c.alert = function (msg) {
+    swal({
+            title: msg,
+            text: "",
+            type: "info",
+            closeOnConfirm: true,
+            // showCancelButton: true,
+            // showLoaderOnConfirm: true,
+     });
+};
 
 $c.showLoading = function(msg) {
-    if (msg == null || msg == "")
-        msg = "加载中...";
-    layer.msg(msg, {icon: 16, time: 0, shade: 0.01});
-}
+    swal({
+        title: "Loading...",
+        type: "",
+        imageUrl: '/static/imgs/loading.gif',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        showConfirmButton: false
+    });
+};
 
 $c.hideLoading = function() {
-    $(".layui-layer-shade").hide();
-    $(".layui-layer").hide();
-}
+    swal.loading();
+};
 
-$c.msg = function(text, type, time) {
-    type = type? type : "success";
-    time = time? time : 3000;
+$c.successMsg = function(msg, time=3000) {
     swal({
-        title: text,
-        type: type,
+        title: msg,
+        type: "success",
+        timer: time,
+        showConfirmButton: false
+    });
+};
+$c.errorMsg = function(msg, time=3000) {
+    swal({
+        title: msg,
+        type: "error",
         timer: time,
         showConfirmButton: false
     });
