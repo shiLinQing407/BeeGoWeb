@@ -33,7 +33,7 @@
             "q+": Math.floor((this.getMonth() + 3) / 3), // quarter
             "S": this.getMilliseconds()
             // millisecond
-        }
+        };
         if (/(y+)/.test(format))
             format = format.replace(RegExp.$1, (this.getFullYear() + "")
                     .substr(4 - RegExp.$1.length));
@@ -41,8 +41,9 @@
             if (new RegExp("(" + k + ")").test(format))
                 format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
         return format;
-    }
-    layui.use(['element', 'layer'], function () {
+    };
+
+    layui.use(['element', 'layer', 'table'], function () {
         var element = layui.element;
         var $ = layui.jquery;
         var layer = layui.layer;
@@ -63,17 +64,65 @@
             }
         });
 
+        //
+        // //监听Tab切换，以改变地址hash值
+        // element.on('tab(nav_tabs)', function(){
+        //     //记录当前的选项卡hash
+        //     // location.hash = 'nav_tabs='+ this.getAttribute('lay-id');
+        //     current_lay_id = this.getAttribute('lay-id');
+        //     console.log(current_lay_id);
+        // });
 
-        window.addEventListener('beforeunload', e => {
-            return false;
-        });
+        function refreshIframe() {
+            //获取hash来切换选项卡
+            // var layid = location.hash.replace(/^#nav_tabs=/, '');
+            // debugger;
+            var layid = "c-c";
+            var tabs = window.parent.document.getElementById("ul-tabs");
+            for (var i = 0; i < tabs.children.length; i++) {
+                if (tabs.children[i].className == "layui-this") {
+                    layid = tabs.children[i].getAttribute("lay-id");
+                    break;
+                }
+            }
+            var $iframe = window.parent.document.getElementById("frame_" + layid);
+            // if (window.parent) {
+            //     var tabs = window.parent.document.getElementById("ul-tabs");
+            //     for (var i = 0; i < tabs.children.length; i++) {
+            //         if (tabs.children[i].className == "layui-this") {
+            //             layid = tabs.children[i].getAttribute("lay-id");
+            //             break;
+            //         }
+            //     }
+            //     var $iframe = window.parent.document.getElementById("frame_" + layid);
+            //     console.log(layid);
+            // } else {
+            //     var tabs = window.document.getElementsByClassName("ul-tabs");
+            //     for (var i = 0; i < tabs.children.length; i++) {
+            //         if (tabs.children[i].className == "layui-this") {
+            //             layid = tabs.children[i].getAttribute("lay-id");
+            //             break;
+            //         }
+            //     }
+            //     var $iframe = window.document.getElementById("frame_" + layid);
+            // }
+            if (typeof $iframe != 'undefined') {
+                $iframe.contentWindow.location.reload(true);
+                return false;
+            }
+        }
+        // window.addEventListener('beforeunload', e => {
+        //     refreshIframe();
+        //     return false;
+        // });
         //禁止用F5键
         window.onkeydown = function (e) {
+            // debugger;
             //解决浏览器兼容的问题
             e = window.event || e;
             //F5按下
             if (e.key == "F5") {
-                e.key = 0;
+                refreshIframe();
                 return false;
             }
         };
@@ -82,19 +131,18 @@
             //解决浏览器兼容的问题
             e = window.event || e;
             if (e.ctrlKey && e.key == "F5"){
+                refreshIframe();
                 return false;
             }
         };
-        window.onbeforeunload = function(e) {
-            // 监听浏览器刷新
-            debugger;
-        };
-        window.onbeforeunload =function(){
-            return"window.onbeforeunload is triggered!";
-        };
-        window.onunload =function(){
-            alert("window.onunload is triggered!")
-        };
+        // window.onbeforeunload =function(){
+        //     // debugger;
+        //     refreshIframe();
+        //     return"window.onbeforeunload is triggered!";
+        // };
+        // window.onunload =function(){
+        //     alert("window.onunload is triggered!")
+        // };
 
         //触发事件
         let active = {
@@ -103,7 +151,7 @@
                 //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
                 element.tabAdd('nav_tabs', {
                     title: name, //选项卡的标题
-                    content: '<iframe src="' + url + '" frameborder="0" scrolling="yes" width="100%" height="100%"></iframe>',  //选项卡的内容  支持传入html
+                    content: '<iframe src="' + url +  '"' + ' id="frame_' + lay_id + '"' +  ' frameborder="0" scrolling="yes" width="100%" height="100%"></iframe>',  //选项卡的内容  支持传入html
                     id: lay_id //选项卡标题的lay-id属性值'
                 });
                 CustomRightClick(lay_id); //给tab绑定右击事件
@@ -133,8 +181,6 @@
             let lay_id = nav_active.attr("data-id");
             let tab_title = nav_active.attr("data-title");
             let url = nav_active.attr("data-url");
-            console.log("url");
-            console.log(url);
             //这时会判断右侧.layui-tab-title属性下的有lay-id属性的li的数目，即已经打开的tab项数目
             if ($(".layui-tab-title li[lay-id]").length <= 0) {
                 //如果比零小，则直接打开新的tab项
