@@ -245,8 +245,12 @@ $c.hideLoading = function() {
     $(".layui-layer").hide();
 }
 
-$c.msg = function(text, time) {
-    if (time == null)
-        time = 1000;
-    layer.msg(text, {time: time});
-}
+$c.msg = function(text, type, time) {
+    time = time? time : 2500;
+    swal({
+        title: text,
+        type: type,
+        timer: time,
+        showConfirmButton: false
+    });
+};
