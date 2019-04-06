@@ -9,8 +9,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label">分类</label>
         <div class="layui-input-block">
-            <select name="class_id" v-for="class_data in class_list">
-                <option :value="class_data.id" selected="">[[class_data.class_name_zh]]</option>
+            <select name="class_id" v-model="data.class_id">
+                <option selected :value="class_data.id" v-for="class_data in class_list">[[class_data.class_name_zh]]</option>
             </select>
         </div>
     </div>
@@ -52,6 +52,7 @@
                 $.getJSON("{{.loadDataAction}}",params, function (ret) {
                     if(ret.code === 0){
                         _this.data = ret.data
+                        console.log(_this.data.class_id.id)
                     }else{
                         alert(ret.massage)
                     }
@@ -66,8 +67,7 @@
                 };
                 $.getJSON("/admin/news_class/loadList", params, function (ret) {
                     if(ret.code === 0){
-                        _this.class_lsit = ret.data
-                        console.log(_this.class_lsit)
+                        _this.class_list = ret.data
                         _this.$nextTick(function(){
                             _this.initLay();
                         })
