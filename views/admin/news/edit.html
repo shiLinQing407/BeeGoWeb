@@ -9,8 +9,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label">分类</label>
         <div class="layui-input-block">
-            <select name="class_id" v-model="data.class_id">
-                <option selected :value="class_data.id" v-for="class_data in class_list">[[class_data.class_name_zh]]</option>
+            <select name="class_id" v-model="selected_class_id">
+                <option :selected="class_data.id == data.class_id.id ? 'true' : 'false'" :value="class_data.id" v-for="class_data in class_list">[[class_data.class_name_zh]]</option>
             </select>
         </div>
     </div>
@@ -29,13 +29,34 @@
     </div>
 
 </form>
+<script type="text/javascript" src="/static/lib/nprogress/nprogress.js"></script>
+<script type="text/javascript" src="/static/js/okadmin.js"></script>
 <script>
+    var layer = '';
+    layui.use(['element', 'form', 'jquery', 'laydate','layedit','layer'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var laydate = layui.laydate;
+        var layedit = layui.layedit;
+        layer = layui.layer;
+
+        layedit.set({
+            uploadImage: {
+                url: '' //接口url
+                ,type: '' //默认post
+            }
+        });
+        layedit.build("content")
+
+    })
     new Vue({
         el: '#form-app',
         data: {
             id: '',
             data : '',
             class_list:'',
+            selected_class_id: 0,
         },
         created(){
             this.id = {{.id}};
@@ -50,9 +71,10 @@
                     "id" : {{.id}}
                 };
                 $.getJSON("{{.loadDataAction}}",params, function (ret) {
+
                     if(ret.code === 0){
                         _this.data = ret.data
-                        console.log(_this.data.class_id.id)
+                        _this.selected_class_id = _this.data.class_id.id
                     }else{
                         alert(ret.massage)
                     }
@@ -77,22 +99,7 @@
                 })
             },
             initLay(){
-                layui.use(['element', 'form', 'jquery', 'laydate','layedit'], function () {
-                    var element = layui.element;
-                    var form = layui.form;
-                    var $ = layui.jquery;
-                    var laydate = layui.laydate;
-                    var layedit = layui.layedit;
 
-                    layedit.set({
-                        uploadImage: {
-                            url: '' //接口url
-                            ,type: '' //默认post
-                        }
-                    });
-                    layedit.build("content")
-
-                })
             }
         },
         mounted: function () {
