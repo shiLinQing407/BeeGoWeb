@@ -45,7 +45,7 @@ func (this *BaseController) Prepare() {
 	//判断用户登录状态
 	this.auth(controllerName, actionName)
 
-	this.Data["pageTitle"] = "LYCH System Backstage"
+	this.Data["pageTitle"] = "BeeVue System Backstage"
 	this.Data["version"] = beego.AppConfig.String("version")
 	this.Data["siteName"] = beego.AppConfig.String("site.name")
 	this.Data["curRoute"] = this.controllerName + "." + this.actionName
@@ -114,6 +114,19 @@ func (this *BaseController) auth(controllerName, actionName string) {
 	//}
 }
 
+/**
+ 获取ajax数据加载地址
+ */
+func(this *BaseController) getLoadAction(action ...string) string{
+	var action_name string
+	if len(action) > 0{
+		action_name = action[0]
+	}else{
+		action_name = "loadData"
+	}
+	return "/admin/" + this.controllerName + "/" + action_name
+}
+
 //渲染模版
 func (this *BaseController) display(tpl ...string) {
 	var tplname string
@@ -123,7 +136,13 @@ func (this *BaseController) display(tpl ...string) {
 		tplname = "admin/" + this.controllerName + "/" + this.actionName + ".html"
 	}
 	//okadmin - iframe 加载方式 ， 子页面加载子页面的layout
-	this.Layout = "layout/admin/child_layout.html"
+	if this.actionName == "edit"{
+		//编辑/添加 使用弹出层
+		this.Layout = "layout/admin/popup_layout.html"
+	}else{
+		this.Layout = "layout/admin/child_layout.html"
+	}
+
 	this.TplName = tplname
 }
 
@@ -254,6 +273,7 @@ func (this *BaseController) Json_encode(data interface{}, encoding ...bool) stri
 	return this.json_return(data, hasIndent, hasEncoding)
 	//	c.Ctx.Output.JSON(c.Data["json"], hasIndent, hasEncoding)
 }
+
 func (this *BaseController) json_return(data interface{}, hasIndent bool, encoding bool) string {
 	var content []byte
 	var err error
@@ -287,6 +307,7 @@ func (this *BaseController) stringsToJSON(str string) string {
 	}
 	return jsons.String()
 }
+
 func (this *BaseController) pointToArray(data []*interface{}) map[interface{}]interface{}{
 	var list = make(map[interface{}]interface{})
 	for i, _ := range data {
@@ -301,7 +322,12 @@ func (this * BaseController) Empty(data interface{}) bool {
 	}
 	return true
 }
-func (this * BaseController) ReturnFailedJson(error error, msg string) {
+
+func (this *BaseController) ReturnFailedJson(error error, msg string) {
 	beego.Error(error.Error())
 	this.jsonResult(enums.JRCodeFailed, msg, nil)
+}
+
+func (this *BaseController) ReturnSuccessJson(obj interface{}){
+	this.jsonResult(0,"加载成功", obj)
 }

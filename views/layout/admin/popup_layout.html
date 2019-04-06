@@ -1,0 +1,76 @@
+<!-- 用于列表页 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>{{.pageTitle}}</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" href="/static/imgs/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/static/lib/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/css/okadmin.css">
+    <link rel="stylesheet" href="/static/font/iconfont.css">
+    <link rel="stylesheet" href="/static/lib/nprogress/nprogress.css">
+
+    <script type="text/javascript" src="/static/lib/layui/layui.js"></script>
+    <script type="text/javascript" src="/static/vue/vue.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="/static/lib/jquery/jquery.form.js"></script>
+
+</head>
+
+<body>
+<div class="ok-body">
+    {{.LayoutContent}}
+</div>
+<script type="text/javascript" src="/static/lib/nprogress/nprogress.js"></script>
+<script type="text/javascript" src="/static/js/okadmin.js"></script>
+{{/*<script type="text/javascript" src="/static/js/common.js"></script>*/}}
+<script>
+    {{/*var layer_div = null;*/}}
+    {{/*var form = null;*/}}
+    {{/*var id = "{{ .id}}";*/}}
+    {{/*var is_add = false;//是否是添加状态*/}}
+    {{/*var loadDataAction = "{{.loadDataAction}}";*/}}
+    {{/*$(function () {*/}}
+        {{/*form = $(".ok-form").bindForm();*/}}
+        {{/*var layui_iframe = $(".layui-layer-iframe", parent.document);*/}}
+        {{/*layer_div = layui_iframe.eq(layui_iframe.length - 1);*/}}
+        {{/*if (id == "" || id == 0) {*/}}
+            {{/*id = "";*/}}
+            {{/*is_add = true;*/}}
+        {{/*}*/}}
+        {{/*if (id != "" && parseInt(id) > 0 && loadDataAction != "") {;*/}}
+            {{/*loadFormData();*/}}
+        {{/*}*/}}
+        {{/*layer_div.find(".js_layui-layer-btn_wrap").show();*/}}
+    {{/*});*/}}
+    {{/*function loadFormData() {*/}}
+        {{/*var url = '{{urlfor ".loadDataAction" ":id" ".id"}}'*/}}
+        {{/*form.load(url, {*/}}
+            {{/*onBeforeLoad: function () {*/}}
+                {{/*$c.showLoading("数据加载中...");*/}}
+            {{/*},*/}}
+            {{/*onLoadSuccess: function (data) {*/}}
+                {{/*if (typeof (onLoadDataSuccess) != "undefined")*/}}
+                    {{/*onLoadDataSuccess(data);*/}}
+                {{/*$c.hideLoading();*/}}
+            {{/*}*/}}
+        {{/*});*/}}
+    {{/*}*/}}
+
+    {{/*function _load(data) {*/}}
+        {{/*for (var name in data) {*/}}
+            {{/*var value = data[name];*/}}
+            {{/*form.find("[name='" + name + "']").each(function () {*/}}
+                {{/*form.setFieldValue($(this), value);*/}}
+            {{/*});*/}}
+        {{/*}*/}}
+        {{/*if (options.onLoadSuccess != null)*/}}
+            {{/*options.onLoadSuccess.call(form, data);*/}}
+    {{/*}*/}}
+</script>
+</body>
+
+</html>

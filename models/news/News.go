@@ -7,14 +7,13 @@ package news
 
 import (
 	"BeeGoWeb/models/common"
-	"fmt"
 	"github.com/astaxie/beego/orm"
 )
 
 //资讯
 type News struct {
 	Id          	int		`json:"id" orm:"auto"`
-	Class			*Class	`json:"class_id" orm:"rel(fk)"`
+	Class			*NewsClass	`json:"class_id" orm:"rel(fk)"`
 	Tags			string	`json:"tags"`
 	Title			string	`json:"title"`
 	Content			string	`json:"content"`
@@ -22,8 +21,8 @@ type News struct {
 }
 
 //资讯分类
-type Class struct{
-	Id          	int		`orm:"auto"`
+type NewsClass struct{
+	Id          	int		`json:"id" orm:"auto"`
 	ClassNameEn		string	`json:"class_name_en"`
 	ClassNameZh		string	`json:"class_name_zh"`
 	CreateTime  	int64	`json:"create_time"`
@@ -60,18 +59,19 @@ func (c *News) Delete() error {
 }
 
 func GetList(page, pageSize int, filters map[string]interface{}) ([]*News, int64){
-	offset := (page - 1) * pageSize
 	news := make([]*News, 0)
 	query := orm.NewOrm().QueryTable(newsTable)
 	if len(filters) > 0 {
 		for key, value := range filters{
-			fmt.Println(key)
-			fmt.Println(value)
 			query = query.Filter(key, value)
 		}
 	}
 	total, _ := query.Count() //数据总数
-	query.OrderBy("-id").Limit(pageSize, offset).All(&news)
+	if page > 0 && pageSize > 0{
+		offset := (page - 1) * pageSize
+		query.Limit(pageSize, offset)
+	}
+	query.OrderBy("-id").All(&news)
 	return news, total
 }
 
@@ -95,45 +95,58 @@ func (c *News) FindById(id int) (*News, error) {
 /*资讯方法*/
 
 /*资讯分类方法*/
-func (c *Class) GetTableName() string {
+func (c *NewsClass) GetTableName() string {
 	return newsClassTable
 }
-func (c *Class) Update(fields ...string) error {
+
+func (c *NewsClass) Update(fields ...string) error {
 	if _, err := orm.NewOrm().Update(c, fields...); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (c *Class) Add() error {
+func (c *NewsClass) Add() error {
 	if _, err := orm.NewOrm().Insert(c); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (c *Class) Delete() error {
+func (c *NewsClass) Delete() error {
 	if _, err := orm.NewOrm().Delete(c); err != nil {
 		return err
 	}
 	return nil
 }
 //资讯分类列表
-func (c *Class) GetClassList(filters ...interface{}) ([]*Class, int64){
-	classes := make([]*Class, 0)
+func GetClassList(page, pageSize int, filters map[string]interface{}) ([]*NewsClass, int64){
+	classes := make([]*NewsClass, 0)
 	query := orm.NewOrm().QueryTable(newsClassTable)
 	if len(filters) > 0 {
-		l := len(filters)
-		for i := 0; i < l; i += 2 {
-			query = query.Filter(filters[i].(string), filters[i+1])
+		for key, value := range filters{
+			query = query.Filter(key, value)
 		}
 	}
-	total, _ := query.Count()
-	query.OrderBy("-sort", "-id").All(&classes)
+	total, _ := query.Count() //数据总数
+	if page > 0 && pageSize > 0{
+		offset := (page - 1) * pageSize
+		query.Limit(pageSize, offset)
+	}
+	query.OrderBy("-id").All(&classes)
 	return classes, total
 }
 
-func (c *Class) FindById(id int) (*Class, error) {
+func ClassListGrid(page, pageSize int, filters map[string]interface{}) ([]NewsClass, int64) {
+	data, total := GetClassList(page, pageSize, filters)
+	list := make([]NewsClass, len(data))
+	for i, item := range data {
+		list[i] = *item
+	}
+	return list, total
+}
+
+func (c *NewsClass) FindById(id int) (*NewsClass, error) {
 	err := orm.NewOrm().QueryTable(newsTable).Filter("id", id).One(c)
 	if err != nil {
 		return nil, err

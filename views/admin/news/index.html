@@ -73,11 +73,21 @@
         if ($(this).hasClass("disabled")) {
             return;
         }
-        var url = '';
+        var url = getUrl("edit");
         $c.openBarWin('添加', 90, 90, url, function () {
             reload();
         });
     });
+
+    var edit = function (id) {
+        if ($(this).hasClass("disabled")) {
+            return;
+        }
+        var url = getUrl("edit","id="+id);
+        $c.openBarWin('编辑', 90, 90, url, function () {
+            reload();
+        });
+    };
 
     /**layUi 控件初始化**/
     layui.use(['element','form', 'jquery', 'laydate'], function () {
