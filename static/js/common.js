@@ -246,7 +246,8 @@ $c.hideLoading = function() {
 }
 
 $c.msg = function(text, type, time) {
-    time = time? time : 2500;
+    type = type? type : "success";
+    time = time? time : 3000;
     swal({
         title: text,
         type: type,
