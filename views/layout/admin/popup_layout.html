@@ -2,22 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="renderer" content="webkit">
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <title>{{.pageTitle}}</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="shortcut icon" href="/static/imgs/favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="/static/lib/layui/css/layui.css">
-    <link rel="stylesheet" href="/static/css/okadmin.css">
-    <link rel="stylesheet" href="/static/font/iconfont.css">
-    <link rel="stylesheet" href="/static/lib/nprogress/nprogress.css">
-
-    <script type="text/javascript" src="/static/lib/layui/layui.js"></script>
-    <script type="text/javascript" src="/static/vue/vue.js"></script>
-    <script type="text/javascript" src="/static/js/jquery-2.1.1.js"></script>
-    <script type="text/javascript" src="/static/lib/jquery/jquery.form.js"></script>
-    <script type="text/javascript" src="/static/js/common.js"></script>
+    {{ template "layout/admin/head.html" .}}
 </head>
 
 <body>
