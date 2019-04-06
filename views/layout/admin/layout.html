@@ -35,7 +35,72 @@
 <script src="/static/lib/nprogress/nprogress.js"></script>
 <script src="/static/js/okadmin.js"></script>
 <script>
+
+    // window.onload = function (e) {
+    //     e = e || window.event;
+    //     console.log(e.key);
+    //     if (e.ctrlKey && e.key == 82 || e.key == 116) {
+    //         //处理刷新
+    //         // window.location.href = "http://localhost:8080/admin/news";
+    //     }
+    //     return false;
+    // };
     layui.use('element', function(){
+        //禁止用F5键
+        // 文档绑定键盘按下事件
+        // $(document).onkeydown  = function(e) {
+        // $(".child-iframe").on("keydown", function(e) {
+        //     //解决浏览器兼容的问题
+        //     e = window.event || e;
+        //     if(e.key == "F5") {
+        //         e.key = 0;
+        //         return false;
+        //     }
+        // });
+
+        // document.onkeydown = function(e) {
+        //     //解决浏览器兼容的问题
+        //     e = window.event || e;
+        //     //F5按下
+        //     if(e.key == "F5") {
+        //         e.key = 0;
+        //         return false;
+        //     }
+        // };
+        window.addEventListener('beforeunload', e => {
+            debugger;
+            console.log("document.onbeforeunload")
+        });
+        window.onkeydown = function (e) {
+            //解决浏览器兼容的问题
+            e = window.event || e;
+            //F5按下
+            if (e.key == "F5") {
+                e.key = 0;
+                return false;
+            }
+        };
+        window.onkeyup = function (e) {
+            //解决浏览器兼容的问题
+            e = window.event || e;
+            if (e.ctrlKey && e.key == "F5"){
+                return false;
+            }
+        };
+        window.onbeforeunload = function(e) {
+          // 监听浏览器刷新
+          debugger;
+        };
+        window.onbeforeunload =function(){
+            return"window.onbeforeunload is triggered!";
+        };
+        window.onunload =function(){
+            alert("window.onunload is triggered!")
+        };
+        // window.onBeforeLoad(
+        //
+        // );
+
         let element = layui.element;
         //触发事件
         let active = {
