@@ -96,6 +96,6 @@ func init()  {
 	//对于自定义的参数，需使用 beego.GetConfig(typ, key string, defaultVal interface{}) 来获取指定 runmode 下的配置（需 1.4.0 以上版本），typ 为参数类型，key 为参数名, defaultVal 为默认值
 
 	//我们的程序往往期望把信息输出到 log 中，现在设置输出到文件很方便，如下所示：
-	//beego.SetLogger("file", `{"filename": "runtime/logs/debug.log"}`);
+	beego.SetLogger("file", `{"filename": "runtime/logs/debug.log"}`);
 
 }
