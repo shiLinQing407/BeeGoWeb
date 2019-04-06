@@ -170,19 +170,19 @@ $c.formatDateTime = function(value){
  * @param callback 回调
  * @param btn 按钮设置 默认:['保存', '保存并关闭', '取消']
  */
-$c.openBarWin = function(title, width_par, height_par, url, callback, btn) {
-    if (typeof (btn) == 'undefined') {
-        btn = ['保存', '保存并关闭', '取消'];
-        flag = false;
-    }
-    var flag = true;
-    if (btn.length > 2)
-        flag = false;
+$c.openBarWin = function(title, width_par, height_par, url, callback) {
+    // if (typeof (btn) == 'undefined') {
+    //     btn = ['保存', '保存并关闭', '取消'];
+    //     flag = false;
+    // }
+    // var flag = true;
+    // if (btn.length > 2)
+    //     flag = false;
     title = '<i class="icon wb-order"></i>' + title;
     layer.open({
         type: 2,
         title: title,
-        btn: btn,
+        // btn: btn,
         shade: false,
         maxmin: true,
         shade: 0.5,
@@ -191,41 +191,46 @@ $c.openBarWin = function(title, width_par, height_par, url, callback, btn) {
         maxmin: false,
         //skin: 'layui-layer-rim', //加上边框
         content: url,
-        btn2: function (index) {
-            if (flag) {
-                this.close(index);//编辑时 该按钮是取消的功能
-                return;
-            }
-            var iframe = window.frames["layui-layer-iframe" + index];
-            if (!iframe)
-                iframe = window.parent.frames["layui-layer-iframe" + index];
-            if (typeof (iframe.saveData) != "undefined") {
-                iframe.saveData.call(this, callback, index, true);
-            } else if (typeof (callback) != "undefined") {
-                callback(index);
-                this.close(index); //一般设定yes回调，必须进行手工关闭
-            } else {
-                this.close(index); //一般设定yes回调，必须进行手工关闭
-            }
-            return false;
-        },
-        yes: function (index, layero) {
-            var iframe = window.frames["layui-layer-iframe" + index];
-            if (!iframe)
-                iframe = window.parent.frames["layui-layer-iframe" + index];
-            if (typeof (iframe.saveData) != "undefined") {
-                iframe.saveData.call(this, callback, index, flag);
-            } else if (typeof (callback) != "undefined" && callback != "") {
-                callback(index);
-                this.close(index); //一般设定yes回调，必须进行手工关闭
-            } else {
-                this.close(index); //一般设定yes回调，必须进行手工关闭
-            }
+        // btn2: function (index) {
+        //     if (flag) {
+        //         this.close(index);//编辑时 该按钮是取消的功能
+        //         return;
+        //     }
+        //     var iframe = window.frames["layui-layer-iframe" + index];
+        //     if (!iframe)
+        //         iframe = window.parent.frames["layui-layer-iframe" + index];
+        //     if (typeof (iframe.saveData) != "undefined") {
+        //         iframe.saveData.call(this, callback, index, true);
+        //     } else if (typeof (callback) != "undefined") {
+        //         callback(index);
+        //         this.close(index); //一般设定yes回调，必须进行手工关闭
+        //     } else {
+        //         this.close(index); //一般设定yes回调，必须进行手工关闭
+        //     }
+        //     return false;
+        // },
+        // yes: function (index, layero) {
+        //     var iframe = window.frames["layui-layer-iframe" + index];
+        //     if (!iframe)
+        //         iframe = window.parent.frames["layui-layer-iframe" + index];
+        //     if (typeof (iframe.saveData) != "undefined") {
+        //         iframe.saveData.call(this, callback, index, flag);
+        //     } else if (typeof (callback) != "undefined" && callback != "") {
+        //         callback(index);
+        //         this.close(index); //一般设定yes回调，必须进行手工关闭
+        //     } else {
+        //         this.close(index); //一般设定yes回调，必须进行手工关闭
+        //     }
+        // },
+        end: function () {
+            $(".layui-laypage-btn")[0].click();
         }
     });
 }
 
-
+/**
+ * todo vue.js 的created 和 mounted 中layer还未创建
+ */
 $c.alert = function(msg, callback) {
     layer.alert(msg, {icon: 6}, function (index) {
         this.close(index);
