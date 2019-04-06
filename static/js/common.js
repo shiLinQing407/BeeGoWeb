@@ -254,7 +254,7 @@ $c.showLoading = function(msg) {
 };
 
 $c.hideLoading = function() {
-    swal.loading();
+    swal.close();
 };
 
 $c.successMsg = function(msg, time=3000) {
