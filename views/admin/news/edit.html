@@ -10,7 +10,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">分类</label>
         <div class="layui-input-block">
-            <select name="Class_id" v-model="data.class_id" lay-verify="required">
+            <select name="ClassId" v-model="data.class_id" lay-verify="required">
                 <option :selected="class_data.id == data.class_id ? 'true' : 'false'" :value="class_data.id" v-for="class_data in class_list">[[class_data.class_name_zh]]</option>
             </select>
         </div>
@@ -68,7 +68,13 @@
         el: '#form-app',
         data: {
             id: '',
-            data : {},
+            data : {
+                "id" : 0,
+                "class_id" : 0,
+                "title" : "",
+                "tags" : "",
+                "content" : "",
+            },
             class_list:'',
             selected_class_id: 0,
         },

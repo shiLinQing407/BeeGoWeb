@@ -13,7 +13,7 @@ import (
 //资讯
 type News struct {
 	Id          	int		`json:"id" orm:"auto"`
-	Class_id		int		`json:"class_id"`
+	ClassId		int		`json:"class_id"`
 	Tags			string	`json:"tags"`
 	Title			string	`json:"title"`
 	Content			string	`json:"content"`
