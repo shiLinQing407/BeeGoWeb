@@ -8,7 +8,6 @@ package controllers
 import (
 	"BeeGoWeb/models/news"
 	"BeeGoWeb/utils"
-	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"time"
@@ -43,27 +42,28 @@ func(this *NewsController) LoadList(){
 
 func(this *NewsController) Edit(){
 	if this.isPost(){
-		news := news.News{}
+		newsClassId, _ := this.GetInt("NewsClassId", 0)
+		new := news.News{}
 		model := orm.NewOrm()
 		var err error
 		//获取form里的值并赋值给结构体， name必须和结构对应
-		if err = this.ParseForm(&news); err != nil {
-			this.ReturnFailedJson(err, "获取数据失败")
+		if err = this.ParseForm(&new); err != nil || newsClassId == 0 {
+			this.ReturnFailedJson(err, "获取数据失败!")
 		}
-		fmt.Println(news)
-		news.CreateTime = time.Now().Unix()
-		if news.Id == 0{
-			news.CreateTime = time.Now().Unix()
-			if _, err := model.Insert(&news); err != nil {
+		new.NewsClass = &news.NewsClass{Id: newsClassId}
+		new.CreateTime = time.Now().Unix()
+		if new.Id == 0 {
+			new.CreateTime = time.Now().Unix()
+			if _, err := model.Insert(&new); err != nil {
 				beego.Error(err.Error())
 				this.ReturnFailedJson(err, "添加资讯失败")
 			}
 		}else{
-			if _, err := model.Update(&news); err != nil {
+			if _, err := model.Update(&new); err != nil {
 				this.ReturnFailedJson(err, "更新资讯失败")
 			}
 		}
-		this.ReturnSuccessJson(news)
+		this.ReturnSuccessJson(new)
 	}else{
 		this.Data["id"] ,_ = this.GetInt("id",0)
 		this.Data["loadDataAction"] = this.getLoadAction()

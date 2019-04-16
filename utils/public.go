@@ -56,8 +56,11 @@ func Empty(data interface{}) bool {
 func String(data interface{}) string{
 	var str string
 	switch data.(type) {
-	case int, int8, int32, int64, uint, uint8, uint16, uint32, uint64:
+	case int, int8, int32, uint, uint8, uint16, uint32:
 		str = strconv.Itoa(interface{}(data).(int))
+		break
+	case int64, uint64:
+		str = strconv.FormatInt(interface{}(data).(int64), 10)
 		break
 	case float32:
 		str = strconv.FormatFloat(interface{}(data).(float64),'f',7, 32)

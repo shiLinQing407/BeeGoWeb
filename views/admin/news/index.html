@@ -23,7 +23,7 @@
         <thead>
         <tr>
             <th data-options="field:'title',width:300,align:'center',sortable: true">标题</th>
-            <th data-options="field:'class_name',width:80,align:'center',sortable: true">分类</th>
+            <th data-options="field:'news_class',width:80,align:'center',sortable: true,formatter:formatClass">分类</th>
             <th data-options="field:'tags',width:200,align:'center',sortable: true">标签</th>
             <th data-options="field:'create_time',width:200,align:'center',sortable: true,formatter:formatTimeStamp">创建时间</th>
             <th data-options="field:'_oper',halign:'center',formatter: formatOper">操作</th>
@@ -45,6 +45,13 @@
     function formatTimeStamp(value){
         return $c.formatDateTime(value)
     }
+    function formatClass(value) {
+        if (value.class_name_zh) {
+            return value.class_name_zh;
+        } else {
+            return '';
+        }
+    }
 
     $(function () {
         $('#grid-table').datagrid({
@@ -57,9 +64,9 @@
             multiSort: true,
             emptyMsg: '<span>无相关数据</span>',
             pagination: true,
-            pageSize: 10,
+            pageSize: 20,
             onLoadSuccess:function (data) {
-
+                console.log(data);
             }
         });
         //设置分页控件
@@ -117,7 +124,7 @@
             return false;//阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
 
-    })
+    });
 
     function reload(data){
         if(!data){

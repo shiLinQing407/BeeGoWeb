@@ -1,31 +1,31 @@
 <form class="layui-form layui-form-pane ok-form" id="form-app">
-    <input type="hidden" name="Id" v-model="data.id" />
+    <input type="hidden" name="Id" v-model="formData.id" />
     <div class="layui-form-item">
         <label class="layui-form-label">标题</label>
         <div class="layui-input-block">
-            <input type="text" v-model="data.title" name="Title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            <input type="text" v-model="formData.title" name="Title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">分类</label>
         <div class="layui-input-block">
-            <select name="ClassId" v-model="data.class_id" lay-verify="required">
-                <option :selected="class_data.id == data.class_id ? 'true' : 'false'" :value="class_data.id" v-for="class_data in class_list">[[class_data.class_name_zh]]</option>
+            <select name="NewsClassId" lay-verify="required" lay-search>
+                <option :selected="class_data.id == formData.news_class.id ? 'selected' : ''" :value="class_data.id" v-for="class_data in class_list">[[class_data.class_name_zh]]</option>
             </select>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">标签</label>
         <div class="layui-input-block">
-            <input type="text" v-model="data.tags" name="Tags" placeholder="请输入文章标签" autocomplete="off" class="layui-input" lay-verify="required">
+            <input type="text" v-model="formData.tags" name="Tags" placeholder="请输入文章标签" autocomplete="off" class="layui-input" lay-verify="required">
         </div>
     </div>
 
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">内容</label>
         <div class="layui-input-block">
-            <textarea v-model="data.content" name="Content" id="content" placeholder="请输入文章内容" class="layui-textarea"></textarea>
+            <textarea v-model="formData.content" name="Content" id="content" placeholder="请输入文章内容" class="layui-textarea"></textarea>
         </div>
     </div>
 
@@ -52,15 +52,15 @@
                 ,type: '' //默认post
             }
         });
-        var index = layedit.build("content")
+        var index = layedit.build("content");
         form.on('submit(submit)', function (data) {
-            var content = layedit.getContent(index) // 富文本内容
+            var content = layedit.getContent(index);// 富文本内容
             if(content == ""){
-                $c.errorMsg("文章内容不能为空")
+                $c.errorMsg("文章内容不能为空");
                 return false;
             }
-            data.field.Content = content
-            app.save(data.field) //调用vue方法
+            data.field.Content = content;
+            app.save(data.field); //调用vue方法
             return false;
         });
     });
@@ -68,15 +68,16 @@
         el: '#form-app',
         data: {
             id: '',
-            data : {
+            formData: {
                 "id" : 0,
-                "class_id" : 0,
+                "news_class" : {
+                    "id": 0
+                },
                 "title" : "",
                 "tags" : "",
                 "content" : "",
             },
-            class_list:'',
-            selected_class_id: 0,
+            class_list:''
         },
         created(){
             this.id = {{.id}};
@@ -92,7 +93,7 @@
                 };
                 $.getJSON("{{.loadDataAction}}",params, function (ret) {
                     if(ret.code === 0){
-                        _this.data = ret.data
+                        _this.formData = ret.data;
                     }else{
                         alert(ret.massage)
                     }

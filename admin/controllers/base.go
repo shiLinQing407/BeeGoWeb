@@ -31,8 +31,10 @@ type AjaxJson struct {
 
 //这个函数主要是为了用户扩展用的，这个函数会在Get、Post、Delete、Put、Finish等这些 Method 方法之前执行，用户可以重写这个函数实现类似用户验证之类。
 func (this *BaseController) Prepare() {
-	this.page, _ = this.GetInt("page")
-	this.pageSize, _ = this.GetInt("limit")
+	this.page, _ = this.GetInt("page")  //列表页 初始分页
+	//this.pageSize, _ = this.GetInt("limit") //列表页 分页记录条数
+	this.pageSize, _ = this.GetInt("rows") //列表页 分页记录条数
+
 	controllerName, actionName := this.GetControllerAndAction()
 	this.controllerName = strings.ToLower(controllerName[0 : len(controllerName)-10])
 	this.actionName = strings.ToLower(actionName)
