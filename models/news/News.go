@@ -74,10 +74,10 @@ func NewsListGrid(page, pageSize int, filters map[string]interface{}) ([]News, i
 	return list, total
 }
 
-func (c *News) FindById(id int) (*News, error) {
+func (c *News) FindById(id int) (error) {
 	err := orm.NewOrm().QueryTable(newsTable).Filter("id", id).One(c)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return c, nil
+	return nil
 }

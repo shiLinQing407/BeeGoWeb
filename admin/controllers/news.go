@@ -79,7 +79,7 @@ func(this *NewsController)	LoadData(){
 	news := &news.News{}
 	var err error
 	if Id > 0 {
-		news, err = news.FindById(Id)
+		err = news.FindById(Id)
 		if err != nil {
 			this.ReturnFailedJson(err,"加载数据错误")
 		}

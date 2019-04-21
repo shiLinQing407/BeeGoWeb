@@ -1,0 +1,131 @@
+
+<div class="right-main">
+    <div id="js_main_header" class="ui-form main_header">
+        <div class="layui-row">
+            <form class="layui-form layui-col-md12 ok-search">
+                <input class="layui-input" placeholder="开始日期" autocomplete="off" name="startTime" id="startTime">
+                <input class="layui-input" placeholder="截止日期" autocomplete="off" name="endTime" id="endTime">
+                <input class="layui-input" placeholder="请输入分类名称" autocomplete="off" name="js_keyword" id="js_keyword">
+                <button class="layui-btn" lay-submit="" lay-filter="search">
+                    <i class="layui-icon layui-icon-search"></i>
+                </button>
+            </form>
+        </div>
+        <okToolbar>
+            <button class="layui-btn" id="js_addBtn">
+                <i class="layui-icon">&#xe61f;</i>添加文章分类
+            </button>
+        </okToolbar>
+
+    </div>
+
+    <table id="grid-table">
+        <thead>
+        <tr>
+            <th data-options="field:'class_name_zh',width:300,align:'center',sortable: true">分类中文名称</th>
+            <th data-options="field:'class_name_en',width:80,align:'center',sortable: true">分类英文名称</th>
+            <th data-options="field:'create_time',width:200,align:'center',sortable: true,formatter:formatTimeStamp">创建时间</th>
+            <th data-options="field:'_oper',halign:'center',formatter: formatOper">操作</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script type="text/javascript">
+
+    function formatOper(value, row, index) {
+        var html = '<span class="grid-operation">';
+        html += '<botton class="layui-btn layui-btn-xs layui-btn-warm" onclick="edit(' + row['id'] + ')" title="编辑" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</botton>';
+        html += '<botton class="layui-btn layui-btn-xs layui-btn-danger" onclick="del(' + row['id'] + ')" title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</botton>';
+        html += '</span>';
+        return html;
+    }
+
+    function formatTimeStamp(value){
+        return $c.formatDateTime(value)
+    }
+
+    $(function () {
+        $('#grid-table').datagrid({
+            url: '{{urlfor "NewsClassController.LoadList"}}',
+            method: "GET",
+            height: $c.getGridHeight(),
+            rownumbers: true,
+            singleSelect: true,
+            remoteSort: false,
+            multiSort: true,
+            emptyMsg: '<span>无相关数据</span>',
+            pagination: true,
+            pageSize: 20,
+            onLoadSuccess:function (data) {
+                console.log(data);
+            }
+        });
+        //设置分页控件
+        $('#grid-table').datagrid('getPager').pagination({
+            pageSize: 10, //每页显示的记录条数，默认为10
+            pageList: [10, 20, 30]
+        });
+    });
+
+    $("#js_addBtn").click(function () {
+        if ($(this).hasClass("disabled")) {
+            return;
+        }
+        var url = getUrl("edit");
+        $c.openBarWin('添加', 90, 90, url, function () {
+            reload();
+        });
+    });
+
+    var edit = function (id) {
+        if ($(this).hasClass("disabled")) {
+            return;
+        }
+        var url = getUrl("edit","id="+id);
+        $c.openBarWin('编辑', 90, 90, url, function () {
+            reload();
+        });
+    };
+
+    /**layUi 控件初始化**/
+    layui.use(['element','form', 'jquery', 'laydate'], function () {
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#startTime',
+            type: "datetime"
+        });
+
+        laydate.render({
+            elem: '#endTime',
+            type: "datetime"
+        });
+
+        form.on('submit(search)', function (data) {
+            // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+            // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+            // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+            $c.showLoading('正在查询，请稍后...');
+            $('#grid-table').datagrid('reload', data.field);
+            $c.hideLoading();
+            return false;//阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+    });
+
+    function reload(data){
+        if(!data){
+            var js_keyword = $("#js_keyword").val();
+            var startTime = $("#startTime").val();
+            var endTime = $("#endTime").val();
+            data = {"js_keyword":js_keyword,"startTime":startTime,"endTime":endTime}
+        }
+        $('#grid-table').datagrid('reload', data);
+    }
+
+</script>

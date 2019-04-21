@@ -1,32 +1,16 @@
 <form class="layui-form layui-form-pane ok-form" id="form-app">
     <input type="hidden" name="Id" v-model="formData.id" />
     <div class="layui-form-item">
-        <label class="layui-form-label">标题</label>
+        <label class="layui-form-label">中文名称</label>
         <div class="layui-input-block">
-            <input type="text" v-model="formData.title" name="Title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            <input type="text" v-model="formData.class_name_zh" name="ClassNameZh" lay-verify="required" placeholder="请输入分类中文名称" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">分类</label>
+        <label class="layui-form-label">英文名称</label>
         <div class="layui-input-block">
-            <select name="NewsClassId" lay-verify="required" lay-search>
-                <option value="">请选择</option>
-                <option :selected="class_data.id == formData.news_class.id ? 'selected' : ''" :value="class_data.id" v-for="class_data in class_list">[[class_data.class_name_zh]]</option>
-            </select>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">标签</label>
-        <div class="layui-input-block">
-            <input type="text" v-model="formData.tags" name="Tags" placeholder="请输入文章标签" autocomplete="off" class="layui-input" lay-verify="required">
-        </div>
-    </div>
-
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">内容</label>
-        <div class="layui-input-block">
-            <textarea v-model="formData.content" name="Content" id="content" placeholder="请输入文章内容" class="layui-textarea"></textarea>
+            <input type="text" v-model="formData.class_name_en" name="ClassNameEn" lay-verify="required" placeholder="请输入分类英文名称" autocomplete="off" class="layui-input">
         </div>
     </div>
 
@@ -55,12 +39,6 @@
         });
         var index = layedit.build("content");
         form.on('submit(submit)', function (data) {
-            var content = layedit.getContent(index);// 富文本内容
-            if(content == ""){
-                $c.errorMsg("文章内容不能为空");
-                return false;
-            }
-            data.field.Content = content;
             app.save(data.field); //调用vue方法
             return false;
         });
@@ -71,14 +49,9 @@
             id: '',
             formData: {
                 "id" : 0,
-                "news_class" : {
-                    "id": 0
-                },
-                "title" : "",
-                "tags" : "",
-                "content" : "",
+                "class_name_zh" : "",
+                "class_name_en" : "",
             },
-            class_list:''
         },
         created(){
             this.id = {{.id}};
@@ -97,22 +70,6 @@
                         _this.formData = ret.data;
                     }else{
                         alert(ret.massage)
-                    }
-                })
-            },
-            loadClass(){
-                var _this = this;
-                var params = {
-                    page    : -1,
-                    limit   : -1,
-                    is_json : 1,
-                };
-                $.getJSON("/admin/newsclass/loadList", params, function (ret) {
-                    if(ret.code === 0){
-                        _this.class_list = ret.data
-
-                    }else{
-                        alert("分类为空")
                     }
                 })
             },
@@ -135,7 +92,7 @@
 
         },
         mounted: function () {
-            this.loadClass();
+
         }
     });
 </script>
