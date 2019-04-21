@@ -1,2 +1,4 @@
 
 runtime/logs/debug.log
+*.iml
+*.xml
