@@ -26,6 +26,7 @@ func init() {
 	beego.Router("/admin/news/loadList", &admin.NewsController{}, "GET:LoadList")
 	beego.Router("/admin/news/edit", &admin.NewsController{}, "*:Edit")
 	beego.Router("/admin/news/loadData", &admin.NewsController{}, "GET:LoadData")
+	beego.Router("/admin/news/uploadImage", &admin.NewsController{}, "POST:UploadImage")
 
 	beego.Router("/admin/newsclass", &admin.NewsClassController{},"GET:Index")
 	beego.Router("/admin/newsclass/loadList", &admin.NewsClassController{}, "GET:LoadList")

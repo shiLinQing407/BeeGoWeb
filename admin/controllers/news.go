@@ -11,6 +11,8 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"time"
+	"path"
+	"strings"
 )
 
 type NewsController struct {
@@ -18,16 +20,16 @@ type NewsController struct {
 }
 
 /*资讯列表*/
-func (this *NewsController) Index(){
+func (this *NewsController) Index() {
 	this.display()
 }
 
-func(this *NewsController) LoadList(){
+func (this *NewsController) LoadList() {
 	keyword := this.GetString("js_keyword", "")
 	startTime := this.GetString("startTime", "")
 	endTime := this.GetString("endTime", "")
 	filter := make(map[string]interface{})
-	if keyword != ""{
+	if keyword != "" {
 		filter["title__icontains"] = keyword //模糊查询 title
 	}
 	if startTime != "" {
@@ -40,8 +42,8 @@ func(this *NewsController) LoadList(){
 	this.toDataGrid(data, count)
 }
 
-func(this *NewsController) Edit(){
-	if this.isPost(){
+func (this *NewsController) Edit() {
+	if this.isPost() {
 		newsClassId, _ := this.GetInt("NewsClassId", 0)
 		new := news.News{}
 		model := orm.NewOrm()
@@ -58,14 +60,14 @@ func(this *NewsController) Edit(){
 				beego.Error(err.Error())
 				this.ReturnFailedJson(err, "添加资讯失败")
 			}
-		}else{
+		} else {
 			if _, err := model.Update(&new); err != nil {
 				this.ReturnFailedJson(err, "更新资讯失败")
 			}
 		}
 		this.ReturnSuccessJson(new)
-	}else{
-		this.Data["id"] ,_ = this.GetInt("id",0)
+	} else {
+		this.Data["id"], _ = this.GetInt("id", 0)
 		this.Data["loadDataAction"] = this.getLoadAction()
 		this.display()
 	}
@@ -74,17 +76,44 @@ func(this *NewsController) Edit(){
 /**
  加载数据
  */
-func(this *NewsController)	LoadData(){
+func (this *NewsController) LoadData() {
 	Id, _ := this.GetInt("id", 0)
 	news := &news.News{}
 	var err error
 	if Id > 0 {
 		err = news.FindById(Id)
 		if err != nil {
-			this.ReturnFailedJson(err,"加载数据错误")
+			this.ReturnFailedJson(err, "加载数据错误")
 		}
 		this.ReturnSuccessJson(news)
 	} else {
-		this.ReturnFailedJson(err,"Id不能为空")
+		this.ReturnFailedJson(err, "Id不能为空")
+	}
+}
+
+func (this *NewsController) UploadImage() {
+	file, fileHead, fileErr := this.Ctx.Request.FormFile("file") //上传的文件
+	beego.Debug(fileHead)
+	if file == nil || fileErr != nil {
+		beego.Error(" 未找到要上传的文件!, ERROR: FormFile获取上传文件失败!")
+		msg := ""
+		this.jsonResult("000", msg, nil)
+	}
+	uploadConf := make(map[string]interface{})
+	uploadConf["RootPath"] = "resource/" //图库根路径
+	uploadConf["SavePath"] = "test/"  //分块缓存文件存储路径
+	uploadConf["AutoSub"] = false
+	uploadConf["SaveName"] = strings.Replace(fileHead.Filename, path.Ext(fileHead.Filename),"", -1) //文件名称 不带后缀
+	uploadConf["SaveExt"] = path.Ext(fileHead.Filename) //文件后缀
+
+	var upload = utils.Upload{}
+	if err := upload.Construct(uploadConf); err == nil {
+		if info, err := upload.Upload(fileHead); err != nil {
+			beego.Error(err.Error())
+			this.jsonResult("000", fileHead.Filename + "upload failed! error message:" + err.Error(), nil)
+		} else {
+			beego.Debug(info)
+			this.jsonResult("111", "upload success!", info)
+		}
 	}
 }

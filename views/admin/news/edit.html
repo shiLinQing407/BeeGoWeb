@@ -49,8 +49,8 @@
 
         layedit.set({
             uploadImage: {
-                url: '' //接口url
-                ,type: '' //默认post
+                url: '{{urlfor "NewsController.UploadImage"}}',//接口url
+                type: 'post' //默认post
             }
         });
         var index = layedit.build("content");
@@ -71,9 +71,6 @@
             id: '',
             formData: {
                 "id" : 0,
-                "news_class" : {
-                    "id": 0
-                },
                 "title" : "",
                 "tags" : "",
                 "content" : "",
@@ -107,7 +104,7 @@
                     limit   : -1,
                     is_json : 1,
                 };
-                $.getJSON("/admin/newsclass/loadList", params, function (ret) {
+                $.getJSON('{{urlfor "NewsClassController.LoadList"}}', params, function (ret) {
                     if(ret.code === 0){
                         _this.class_list = ret.data
 

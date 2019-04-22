@@ -18,29 +18,20 @@ func InitStruct(ptr interface{}, params map[string]interface{}) error {
 			tag := structField.Tag
 			structKey := tag.Get("json")
 			if structKey == "" {
-				//structKey = strings.ToLower(structField.Name)
 				structKey = structField.Name
 			}
 			//去掉逗号后面内容 如 `json:"voucher_usage,omitempty"`
 			structKey = strings.Split(structKey, ",")[0]
 			if value, ok := params[structKey]; ok {
-				//给结构体赋值
-				//保证赋值时数据类型一致
-				//beego.Debug("set value")
-				//beego.Debug("value's type")
-				//beego.Debug(reflect.ValueOf(value).Type())
-				//beego.Debug("structField.Name Type")
-				//beego.Debug(elem.FieldByName(structField.Name).Type())
+				//给结构体赋值 保证赋值时数据类型一致
 				if reflect.ValueOf(value).Type() == elem.FieldByName(structField.Name).Type() {
-					//beego.Debug(structField.Name)
-					//beego.Debug(reflect.ValueOf(value))
 					elem.FieldByName(structField.Name).Set(reflect.ValueOf(value))
 				}
 			}
 		}
 		return nil
 	} else {
-		return errors.New("构造失败")
+		return errors.New("结构体构造失败!")
 	}
 }
 
