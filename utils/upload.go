@@ -8,6 +8,8 @@ import (
 	"path"
 	"io"
 	"strings"
+	"tests/utils"
+	"time"
 )
 
 type Upload struct {
@@ -15,6 +17,7 @@ type Upload struct {
 	MaxSize      int64                       //上传的文件大小限制 (0-不做限制)
 	Exts         map[string]string           //允许上传的文件后缀
 	AutoSub      bool                        //自动子目录保存文件
+	TimeSub      bool                        //保存文件划分时间目录
 	SubName      map[int]string              //子目录创建方式，[0]-函数名，[1]-参数，多个参数使用数组  'subName' => array('date', 'Ymd'),
 	RootPath     string                      // BASE_DIR . '/public/uploads/', //保存根路径
 	SavePath     string                      //保存路径
@@ -35,15 +38,15 @@ type Upload struct {
  */
 func (u *Upload) Construct(params map[string]interface{}) error {
 	//初始化文件上传配置
-	u.MaxSize = 0                    //上传的文件大小限制 (0-不做限制)
-	u.AutoSub = true                 //自动子目录保存文件
-	u.RootPath = "/upload"           // BASE_DIR . '/public/uploads/', //保存根路径
-	u.SavePath = ""                  //保存路径
-	u.SaveExt = ""                   //文件保存后缀，空则使用原后缀
-	u.Replace = false                //存在同名是否覆盖
-	u.Hash = true                    //是否生成hash编码
-	u.CallBack = false               //检测文件是否存在回调，如果存在返回文件信息数组
-	u.Driver = ""                    // 文件上传驱动
+	u.MaxSize = 0          //上传的文件大小限制 (0-不做限制)
+	u.AutoSub = true       //自动子目录保存文件
+	u.RootPath = "/upload" // BASE_DIR . '/public/uploads/', //保存根路径
+	u.SavePath = ""        //保存路径
+	u.SaveExt = ""         //文件保存后缀，空则使用原后缀
+	u.Replace = false      //存在同名是否覆盖
+	u.Hash = true          //是否生成hash编码
+	u.CallBack = false     //检测文件是否存在回调，如果存在返回文件信息数组
+	u.Driver = ""          // 文件上传驱动
 	u.FileType = ".gif,.jpg,.jpeg,.bmp,.png,.swf,.tmp"
 	u.SubName = make(map[int]string) //子目录创建方式，[0]-函数名，[1]-参数，多个参数使用数组  'subName' => array('date', 'Ymd'),
 	u.SubName[0] = "date"
@@ -97,13 +100,12 @@ func (u *Upload) saveFile(file *multipart.FileHeader, fileInfo map[string]interf
 		u.error = errors.New("上传文件获取失败")
 		return false
 	} else {
-		fileName := u.RootPath + String(fileInfo["savePath"]) + String(fileInfo["saveName"])  //
-		beego.Debug("文件存储路径")
-		beego.Debug(fileName)
+		fileName := String(fileInfo["src"])
 		if !replace && IsFile(fileName) {
 			/* 不覆盖同名文件 */
-			u.error = errors.New("存在同名文件" + String(fileInfo["saveName"]))
-			return false
+			//u.error = errors.New("存在同名文件" + String(fileInfo["title"]))
+			//return false
+			return true
 		} else if replace {
 			/* 覆盖同名文件 */
 			beego.Debug("覆盖")
@@ -155,7 +157,7 @@ func (u *Upload) CheckSavePath() bool {
 	path := u.RootPath + u.SavePath
 	if !IsExist(path) {
 		if err := os.Mkdir(path, os.ModePerm); err != nil {
-			u.error = errors.New("上传目录" + u.SavePath + "创建失败!")
+			u.error = errors.New("上传目录" + path + "创建失败!")
 			return false
 		}
 	} else if !IsWritable(path) {
@@ -256,10 +258,25 @@ func (u *Upload) getSubPath(fileName string) string {
 	if u.AutoSub && rule != "" {
 		subPath = u.getName(rule, fileName) + "/"
 	}
-	if Empty(subPath) && !u.Mkdir(u.SavePath+subPath) {
+	if Empty(subPath) || !u.Mkdir(u.SavePath + subPath) {
 		return ""
 	}
 	return subPath
+}
+
+func (u *Upload) getTimeSubPath() string {
+	path := u.RootPath + u.SavePath
+	var timeSubPath string
+	timeSubPath = ""
+	if u.TimeSub {
+		timeSubPath = utils.Date("Ymd", time.Now()) + "/"
+	}
+	if Empty(timeSubPath){
+		return ""
+	} else if !IsExist(path + timeSubPath) && !u.Mkdir(path + timeSubPath)  {
+		return ""
+	}
+	return timeSubPath
 }
 
 func (u *Upload) getHash(temName string) string {
@@ -279,10 +296,10 @@ func (u *Upload) upload(file *multipart.FileHeader) (map[string]interface{}, boo
 
 	var info = make(map[string]interface{})
 	info["key"] = ""
-	info["type"] = ""                                  //文件类型
-	info["ext"] = path.Ext(file.Filename)              //文件扩展
-	info["name"] = strings.Replace(file.Filename, path.Ext(file.Filename),"", -1)  //文件名称
-	info["size"] = file.Size                           //文件大小
+	info["type"] = ""                                                              //文件类型
+	info["ext"] = path.Ext(file.Filename)                                          //文件扩展
+	info["name"] = strings.Replace(file.Filename, path.Ext(file.Filename), "", -1) //文件名称
+	info["size"] = file.Size                                                       //文件大小
 
 	/* 无效上传 */
 	if Empty(file.Filename) {
@@ -330,10 +347,10 @@ func (u *Upload) upload(file *multipart.FileHeader) (map[string]interface{}, boo
 	//}
 
 	/* 生成保存文件名 */
-	info["saveName"] = u.getSaveName(file);
+	info["title"] = u.getSaveName(file);
 
 	/* 检测并创建子目录 */
-	info["savePath"] = u.SavePath + u.getSubPath(String(info["name"]))
+	info["src"] = u.RootPath + u.SavePath + u.getSubPath(String(info["name"])) + u.getTimeSubPath() + String(info["title"])
 	//
 	/* 保存文件 并记录保存成功的文件 */
 	if u.saveFile(file, info, u.Replace) {

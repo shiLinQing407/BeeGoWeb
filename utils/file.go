@@ -39,7 +39,6 @@ func IsExist(path string) bool {
 			return false
 		}
 	}
-	//beego.Debug(file.IsDir())
 	return true
 }
 

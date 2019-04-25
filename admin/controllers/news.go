@@ -13,6 +13,7 @@ import (
 	"time"
 	"path"
 	"strings"
+	"BeeGoWeb/enums"
 )
 
 type NewsController struct {
@@ -93,16 +94,15 @@ func (this *NewsController) LoadData() {
 
 func (this *NewsController) UploadImage() {
 	file, fileHead, fileErr := this.Ctx.Request.FormFile("file") //上传的文件
-	beego.Debug(fileHead)
 	if file == nil || fileErr != nil {
 		beego.Error(" 未找到要上传的文件!, ERROR: FormFile获取上传文件失败!")
-		msg := ""
-		this.jsonResult("000", msg, nil)
+		this.jsonResult(enums.JRCodeFailed, "未找到要上传的文件!", nil)
 	}
 	uploadConf := make(map[string]interface{})
 	uploadConf["RootPath"] = "resource/" //图库根路径
-	uploadConf["SavePath"] = "test/"  //分块缓存文件存储路径
+	uploadConf["SavePath"] = "news/" //分块缓存文件存储路径
 	uploadConf["AutoSub"] = false
+	uploadConf["TimeSub"] = true  //图片保存按日期分目录
 	uploadConf["SaveName"] = strings.Replace(fileHead.Filename, path.Ext(fileHead.Filename),"", -1) //文件名称 不带后缀
 	uploadConf["SaveExt"] = path.Ext(fileHead.Filename) //文件后缀
 
@@ -110,10 +110,9 @@ func (this *NewsController) UploadImage() {
 	if err := upload.Construct(uploadConf); err == nil {
 		if info, err := upload.Upload(fileHead); err != nil {
 			beego.Error(err.Error())
-			this.jsonResult("000", fileHead.Filename + "upload failed! error message:" + err.Error(), nil)
+			this.jsonResult(enums.JRCodeFailed, fileHead.Filename + "文件上传失败! error message:" + err.Error(), nil)
 		} else {
-			beego.Debug(info)
-			this.jsonResult("111", "upload success!", info)
+			this.jsonResult(enums.JRCodeSucc, "", info)
 		}
 	}
 }
